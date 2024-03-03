@@ -31,7 +31,7 @@ public class LogInAsAdmin {
     public void loggInCheck(String email, String password) {
         AdminData a=new AdminData();
         String file="DataForAdmin.txt";
-        a.readAdminDataFromFile(file);
+        a.readAdminDataFromFile();
         for (AdminClass admin : a.getAdminList()) {
             if (email.equals(admin.getEmail()) && password.equals(admin.getPassword())) {
                 login();
@@ -40,4 +40,5 @@ public class LogInAsAdmin {
 
         }
 
-    }}
+    }
+}

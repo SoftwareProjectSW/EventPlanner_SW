@@ -6,21 +6,22 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+//import java.util.List;
 
 public class AdminData {
-    private ArrayList<AdminClass> adminList;
+    private  ArrayList<AdminClass> adminList;
+    private  String adminFile="DataForAdmin.txt";
 
     public AdminData() {
         adminList = new ArrayList<>();
     }
 
-    public ArrayList<AdminClass> getAdminList() {
+    public  ArrayList<AdminClass> getAdminList() {
         return adminList;
     }
 
-    public void readAdminDataFromFile(String filename) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+    public  void readAdminDataFromFile() {
+        try (BufferedReader br = new BufferedReader(new FileReader(adminFile))) {
             String line;
             while ((line = br.readLine()) != null) {
                 // Assuming the data is formatted as "email,password"

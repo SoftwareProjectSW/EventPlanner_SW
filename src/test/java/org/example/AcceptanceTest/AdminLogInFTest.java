@@ -1,7 +1,7 @@
 package org.example.AcceptanceTest;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import org.example.AdminClass;
+//import org.example.AdminClass;
 import APP.LogInAsAdmin;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,6 +22,7 @@ public class AdminLogInFTest {
     public void thePasswordIs(String pass) {
         this.password=pass;
     }
+
     @Then("the admin will not login")
     public void theAdminWillNotLogin() {
         LogApp.loggInCheck(email,password);
