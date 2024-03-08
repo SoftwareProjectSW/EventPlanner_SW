@@ -86,14 +86,12 @@ public class Main {
                         int optionadmin = in.nextInt();
                         if(optionadmin==1){
                             addSP();
-                           return;
                         }
                        else if (optionadmin == 2) {
                             viewServiceProviderOptions();
                         }
                        else if(optionadmin==3){
                            deleteSp();
-                           return;
                         }
                         else if(optionadmin==4)
                             break;

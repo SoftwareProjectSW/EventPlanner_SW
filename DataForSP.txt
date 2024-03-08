@@ -2,3 +2,4 @@ Hala,1,hala@gamil.com,designer
 Raghad,2,raghad@gamil.com,designer
 Huda,3,huda@gamil.com,designer
 Raghad,4,raghad@gamil.com,designer
+faiq,5,faiq@gmail.com,dj,cook
