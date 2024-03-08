@@ -181,9 +181,7 @@ public class DeleteSP_App {
                 flag = true;
                 setremoveByIdFlagTrue();
             }
-
         }
-
 
         ServiceProviderData SPData = new ServiceProviderData();
         File serviceProviderFile = new File("DataForSP.txt");
@@ -200,9 +198,14 @@ public class DeleteSP_App {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
                 for (ServiceProviderClass provider : SPData.getServiceProviderList()) {
-                    writer.write(provider.getName() + "," + provider.getId());
-                    writer.newLine();
-                }
+                    writer.write(provider.getName() + "," + provider.getId()+ "," + provider.getEmail());
+                    Integer i =0;
+                    for (String Services : SPData.getServiceProviderList().get(i).getServicesList()){
+                        writer.write( "," + Services);
+
+                    }
+
+                    writer.newLine();                }
                 writer.close();
                 serviceProviderFile.delete();
                 tempFile.renameTo(serviceProviderFile);
@@ -213,7 +216,6 @@ public class DeleteSP_App {
         } else {
             System.out.println("No service provider found with the given ID.");
         }
-
 
     }
 

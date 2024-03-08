@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a6a87ba-d1a6-4aea-8fdb-4a5e6658bdde" name="Changes" comment="Admin log in commit2">
-      <change beforePath="$PROJECT_DIR$/cases/AdminLogInF.feature" beforeDir="false" afterPath="$PROJECT_DIR$/cases/AdminLogInF.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataB/AdminData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataB/AdminData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/AcceptanveTest/AdminLogInFTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/AcceptanveTest/AdminLogInFTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/APP/LogInAsAdmin.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/APP/LogInAsAdmin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DataB/AdminData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DataB/AdminData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/org/example/AcceptanveTest/AdminLogInFTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/org/example/AcceptanveTest/AdminLogInFTest.class" afterDir="false" />
+    <list default="true" id="8a6a87ba-d1a6-4aea-8fdb-4a5e6658bdde" name="Changes" comment="4 features loginAdmin,add,delete,view">
+      <change beforePath="$PROJECT_DIR$/src/main/java/APP/DeleteSP_App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/APP/DeleteSP_App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1709052463778</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="4 features loginAdmin,add,delete,view">
+      <created>1709913779423</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1709913779423</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -191,6 +191,7 @@
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Admin log in commit" />
     <MESSAGE value="Admin log in commit2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin log in commit2" />
+    <MESSAGE value="4 features loginAdmin,add,delete,view" />
+    <option name="LAST_COMMIT_MESSAGE" value="4 features loginAdmin,add,delete,view" />
   </component>
 </project>

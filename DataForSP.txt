@@ -1,6 +1,4 @@
 Hala,1,hala@gamil.com,designer
-Raghad,2,raghad@gamil.com,cook
-Huda,3,huda@gamil.com,DJ
-Raghad,4,raghad@gamil.com,cook,DJ
-Huda,5,huda@gamil.com,DJ,designer,cook
-Huda2,6,huda@gamil.com,DJ,designer,cook
+Raghad,2,raghad@gamil.com,designer
+Huda,3,huda@gamil.com,designer
+Raghad,4,raghad@gamil.com,designer
