@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminData {
-    private ArrayList<AdminClass> adminList;
+    private static List<AdminClass> adminList;
 
     public AdminData() {
         adminList = new ArrayList<>();
     }
 
-    public ArrayList<AdminClass> getAdminList() {
+    public static List<AdminClass> getAdminList() {
         return adminList;
     }
 
