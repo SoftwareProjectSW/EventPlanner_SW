@@ -74,7 +74,7 @@ public class DeleteSP_App {
     public void enterServiceProviderName(String name) {
 
         Integer Count =0 ;
-        ServiceProviderData sp =new ServiceProviderData();
+        ServiceProviderData sp = new ServiceProviderData();
 
         for (ServiceProviderClass temp : sp.getServiceProviderList()) {
             if (name.equals( temp.getName() )) {
@@ -85,7 +85,7 @@ public class DeleteSP_App {
         }
         if (Count== 1){
             setIsUniqueTrue();
-        } else if (Count==0 ) {
+        } else if (Count==0 ) { // we could remove this else if part
             setSPExistsFalse();
             setIsUniqueFalse();
         }else if (Count >0 ){
@@ -142,7 +142,14 @@ public class DeleteSP_App {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
                 for (ServiceProviderClass provider : SPData.getServiceProviderList()) {
-                    writer.write(provider.getName() + "," + provider.getId());
+                    writer.write(provider.getName() + "," + provider.getId() + "," + provider.getEmail() );
+
+                    Integer i =0;
+                    for (String Services : SPData.getServiceProviderList().get(i).getServicesList()){
+                        writer.write( "," + Services);
+
+                    }
+
                     writer.newLine();
                 }
                 writer.close();

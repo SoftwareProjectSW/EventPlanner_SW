@@ -18,10 +18,12 @@ public class AdminLogInFTest {
 
     }
 
+
     @Given("the password is {string}")
     public void thePasswordIs(String pass) {
         this.password=pass;
     }
+
 
     @Then("the admin will not login")
     public void theAdminWillNotLogin() {
@@ -29,12 +31,14 @@ public class AdminLogInFTest {
         assertFalse(LogApp.isLoggedIn());
 
     }
+
     @Then("the message appear to tell the admin what's wrong")
     public void theMessageAppearToTellTheAdminWhatSWrong() {
         String email="";
         String pass="";
         LogApp.errorInLogin(email,pass);
     }
+
 
     @Then("successful login")
     public void successfulLogin() {
@@ -45,6 +49,7 @@ public class AdminLogInFTest {
         assertTrue(LogApp.isLoggedIn());
 
     }
+
 
     @Given("the email is {string}")
     public void theEmailIs(String mail) {

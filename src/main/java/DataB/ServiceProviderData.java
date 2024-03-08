@@ -31,11 +31,24 @@ public class ServiceProviderData {
             while ((line = br.readLine()) != null) {
                 // Assuming the data is formatted as "email,password"
                 String[] parts = line.split(",");
-                if (parts.length == 2) {
+                if (parts.length > 3) {
                     String name = parts[0].trim();
                     String id = parts[1].trim();
-                    ServiceProviderClass sProvider = new ServiceProviderClass(name, id);
+                    String email = parts[2].trim();
+                    ServiceProviderClass sProvider = new ServiceProviderClass(name, id,email);
+
+                    String services = null;
+                    Integer trim =3;
+
+                    while (parts.length > trim){
+                        services = parts[trim].trim();
+                        sProvider.getServicesList().add(services);
+                        trim++;
+
+                    }
                     ServiceProviderList.add(sProvider);
+
+
                 } else {
                     System.err.println("Invalid data format: " + line);
                 }
