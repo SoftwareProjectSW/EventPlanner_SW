@@ -1,11 +1,10 @@
 package APP;
 
-import DataB.AdminData;
-import org.example.AdminClass;
+import DataB.OrganizerData;
+import org.example.Organizer;
 
-//import javax.swing.*;
+public class LoginOrgApp {
 
-public class LogInAsAdmin {
     private boolean loginFlag=false;
     public boolean isLoggedIn() {
 
@@ -23,17 +22,17 @@ public class LogInAsAdmin {
         if (e.isEmpty() || p.isEmpty()) {
             System.out.println("empty email or password");
         }
-        else        System.out.println("Invalid email or password");
+        else System.out.println("Invalid email or password");
 
 
 
     }
     public void loggInCheck(String email, String password) {
-        AdminData a=new AdminData();
-        String file="DataForAdmin.txt";
-        a.readAdminDataFromFile();
-        for (AdminClass admin : a.getAdminList()) {
-            if (email.equals(admin.getEmail()) && password.equals(admin.getPassword())) {
+        OrganizerData Org = new OrganizerData();
+        String file = "DataForOrganizer.txt";
+
+        for (Organizer temp : Org.getorganizersList()) {
+            if (email.equals(temp.getEmail()) && password.equals(temp.getPassword())) {
                 login();
                 return;
             }
@@ -41,6 +40,4 @@ public class LogInAsAdmin {
         }
 
     }
-
-
 }

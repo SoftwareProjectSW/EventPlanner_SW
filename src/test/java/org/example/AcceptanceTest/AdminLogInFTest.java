@@ -27,6 +27,9 @@ public class AdminLogInFTest {
 
     @Then("the admin will not login")
     public void theAdminWillNotLogin() {
+
+       // email ="hello";
+        //password = "e";
         LogApp.loggInCheck(email,password);
         assertFalse(LogApp.isLoggedIn());
 
@@ -34,18 +37,18 @@ public class AdminLogInFTest {
 
     @Then("the message appear to tell the admin what's wrong")
     public void theMessageAppearToTellTheAdminWhatSWrong() {
-        String email="";
-        String pass="";
-        LogApp.errorInLogin(email,pass);
+         email="";
+        password="";
+        LogApp.errorInLogin(email,password);
     }
 
 
     @Then("successful login")
     public void successfulLogin() {
 
-        String  e="hala@gmail.com";
-        String p="123";
-        LogApp.loggInCheck(e,p);
+        email="hala@gmail.com";
+        password="123";
+        LogApp.loggInCheck(email,password);
         assertTrue(LogApp.isLoggedIn());
 
     }

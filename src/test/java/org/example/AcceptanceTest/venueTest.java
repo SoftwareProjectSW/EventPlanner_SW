@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 public class venueTest {
 
-    private String msg;
+
     private Double budget;
     private Integer requiredSize;
     private ReserveVenueApp app;

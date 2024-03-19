@@ -35,11 +35,13 @@ public class ReserveVenueApp {
 
             ArrayList<VenueClass> venues = venueData.getVenueArrayList();
             for (VenueClass temp : venues ) {
+                int i = 1 ;
                 if (temp.getPrice() <= budget && temp.getSize() >= size ) {
                     System.out.println(
-                            temp.toString()
+                            i+") " +temp.toString()
 
                             );
+                    i++;
 
 
                 }
@@ -68,10 +70,15 @@ public class ReserveVenueApp {
         return array;
     }
 
-    public String getSelectedVenue(Double budget , Integer size,Integer i){
+    public String getSelectedVenue(Double budget , Integer size,Integer a){
 
-        ArrayList<VenueClass> array = getVenueWithBudget( budget , size);
+        Integer i = a-1;
+
+        ArrayList <VenueClass> array = getVenueWithBudget( budget , size);
+        if(i < array.size())
         return array.get(i).toString();
+        else return " index out of range ";
+
     }
 
 }
