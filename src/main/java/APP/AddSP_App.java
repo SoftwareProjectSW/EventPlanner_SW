@@ -136,7 +136,7 @@ public class AddSP_App {
                 System.err.println("Error: Invalid line format!");
                 showMessageToEnterFullDetails();
             }
-            showMessage();
+
         }
 
 
@@ -155,15 +155,19 @@ public class AddSP_App {
     }
 
 
-        public void enterLineUntillValid(){
+        public void enterLineUntillValid(String line){
+
             Scanner scanner = new Scanner(System.in);
 
-            while (!isSPLineValide){
 
-                this.inputLine = scanner.nextLine();
-                this.isSPLineValide = isValidLine(inputLine);
+        do {
+            this.inputLine = scanner.nextLine();
+            this.isSPLineValide = isValidLine(inputLine);
 
-            }
+        }while (getIsSPLineValide());
+
+
+
             addLineToFile(inputLine);
 
 

@@ -199,10 +199,20 @@ public class DeleteSP_App {
                 File tempFile = new File("temp.txt");
                 BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
+
                 for (ServiceProviderClass provider : SPData.getServiceProviderList()) {
-                    writer.write(provider.getName() + "," + provider.getId());
+                    writer.write(provider.getName() + "," + provider.getId() + "," + provider.getEmail() );
+
+                    Integer i =0;
+                    for (String Services : SPData.getServiceProviderList().get(i).getServicesList()){
+                        writer.write( "," + Services);
+
+                    }
+
                     writer.newLine();
                 }
+
+
                 writer.close();
                 serviceProviderFile.delete();
                 tempFile.renameTo(serviceProviderFile);
