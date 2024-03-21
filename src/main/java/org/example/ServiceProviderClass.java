@@ -1,6 +1,8 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ServiceProviderClass {
 
@@ -18,6 +20,13 @@ public class ServiceProviderClass {
         this.name = name;
         this.id = id;
         this.email = email;
+
+    }
+    public ServiceProviderClass( String name, String id, String email,ArrayList<String> services) {
+        this.name = name;
+        this.id = id;
+        this.email = email;
+        this.servicesList = services;
 
     }
 
@@ -53,4 +62,31 @@ public class ServiceProviderClass {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return ColoredOutput.ANSI_CYAN+"Service Provider's INFO {" +'\n'+
+                "NAME: " + name + '\n' +
+                "ID: " + id + '\n' +
+                "Email: " + email + '\n' +
+                "servicesList: " + servicesList +
+                "  }"+'\n'+
+                ColoredOutput.ANSI_RESET
+                ;
+    }
+
+
+//            public static void main(String[] args) {
+//
+//                String name = "HALA";
+//                String id= "123";
+//                String email = "HI@GMAIL.COM";
+//
+//                ServiceProviderClass sp = new ServiceProviderClass(name,id,email);
+//                sp.getServicesList().add("DJ");
+//                sp.getServicesList().add("RRRJ");
+//                sp.getServicesList().add("DWWWJ");
+//
+//                System.out.println(sp.toString());
+//
+//            }
 }

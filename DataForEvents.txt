@@ -1,0 +1,42 @@
+Event{
+status: NOT_SEEN
+customer email: hala
+SP: 
+Service Provider's INFO {
+NAME: HALA
+ID: 123
+Email: HI@GMAIL.COM
+servicesList: [DJ, RRRJ, DWWWJ]  }
+venue: PALACE
+date: 20/2/2020
+price: 2000$
+}
+***
+Event{
+status: NOT_SEEN
+customer email: hala
+SP:
+Service Provider's INFO {
+NAME: HALA
+ID: 123
+Email: HI@GMAIL.COM
+servicesList: [DJ, RRRJ, DWWWJ]  }
+venue: PALACE
+date: 20/2/2020
+price: 2000$
+}
+***
+Event{
+status: NOT_SEEN
+customer email: hala
+SP:
+Service Provider's INFO {
+NAME: HALA
+ID: 123
+Email: HI@GMAIL.COM
+servicesList: [DJ, RRRJ, DWWWJ]  }
+venue: PALACE
+date: 20/2/2020
+price: 2000$
+}
+***
