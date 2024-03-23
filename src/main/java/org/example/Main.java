@@ -61,6 +61,8 @@ public class Main {
          boolean promptForCredentials = true;
          boolean displayUserMenu = true;
          boolean displayPackageMenu=true;
+        boolean displayOrgMenu = true;
+
 
         while (true) {
             try {
@@ -211,15 +213,18 @@ break;
                             org = a;
                         }
                     }
-                    logger.info("WELCOME Organizer " + org.getEmail() + "\n");
+
+                        logger.info("WELCOME Organizer " + org.getEmail() + "\n");
                     while (true) {
+                 if(displayOrgMenu)       {
                         displayupline();
                         logger.info("|       Welcome to Organizer page :)                   \n");
                         logger.info("| 1- View Pinned Events                                  \n");
-                        logger.info("| 2-                                      |\n");
-                        logger.info("| 3-                                \n");
+                        logger.info("| 2-add venue                                      |\n");
+                        logger.info("| 3-View Upcoming Events                                \n");
                         logger.info("| 4- Log Out                                       \n");
                         displaydownline();
+                    }
                         int optionadmin = in.nextInt();
                         if (optionadmin == 1) {
 ApproveApp app=new ApproveApp();
@@ -227,14 +232,34 @@ app.aListOfPendingEventsAwaitingApproval();
 Scanner i=new Scanner(System.in);
 System.out.println("\u001B[33mplease enter the id of SP that have events to review :\u001B[0m ");
 String id=i.nextLine();
+System.out.println("\u001B[33mplease enter the date of the evente also:\u001B[0m");
+String dat=i.nextLine();
 System.out.println("\u001B[33mplease write the new statue approved/decline:\u001B[0m");
 String status=i.nextLine();
-app.changeEventStatus(id,status);
+app.changeEventStatus(id,status,dat);
 
 
                         }
                         else if (optionadmin == 2) {
+                            System.out.println("please enter the new venue name:");
+                            Scanner in=new Scanner(System.in);
+                            String name=in.nextLine();
+                            System.out.println("please enter the new venue capacity:");
+                            Scanner inn=new Scanner(System.in);
+                            int capacity =inn.nextInt();
+                            System.out.println("please enter the new venue price:");
+                            Scanner i=new Scanner(System.in);
+                            double price =i.nextDouble();
+                            ReserveVenueApp op=new ReserveVenueApp();
+                          String validOrNot=  op.isValidVenueDetails(name,capacity,price);
+                          System.out.println(validOrNot);
+                            op.isAddedVenue(name,capacity,price);
+                            displayOrgMenu=true;
                         } else if (optionadmin == 3) {
+                                ApproveApp app=new ApproveApp();
+                                app.aListOfApprovedEvents();
+                                displayOrgMenu=true;
+
                         } else if (optionadmin == 4) {
                             displayMainMenu=true;
                             break;
@@ -371,6 +396,7 @@ delete.removeServiceProviderByName(name);
     static Scanner scanner = new Scanner(System.in);
     static List<ServiceProviderClass> chosenProviders = new ArrayList<>();
     public static void checkAndConfirmEvent(String date, int id,String budget) {
+        double p =0;
         SuperSPData object = new SuperSPData();
 
         List<List<String>> freeDates = object.getAllFreeDates();
@@ -399,6 +425,7 @@ delete.removeServiceProviderByName(name);
                      Scanner inn=new Scanner(System.in);
                      int y= inn.nextInt();
                      venueSelected= resApp.getSelectedVenue(venueBudget,size,y)  ;
+                   p=resApp.getSelectedVenuePrice(venueBudget,size,y);
                  }while(venueSelected.equals(" index out of range "));
 
                 }
@@ -411,10 +438,10 @@ System.out.println("there is no venue with your budget/needed size");
                     List<ServiceProviderClass> serviceProviderList1 = serviceProviderData.getServiceProviderList();
 
                     ServiceProviderClass chosenProvider1 = serviceProviderList1.get(id - 1);
-
                     List<String> allBudgets1 = object.getAllBudgets();
-                    String chosenBudget1 = allBudgets1.get(id - 1);
-
+                    double originalBudget = Double.parseDouble(allBudgets1.get(id - 1).replace("$", ""));
+                    double newBudget = originalBudget + p;
+                    String chosenBudget1 =  String.format("%.2f", newBudget)+"$" ;
                     System.out.println("\u001B[33mConfirmation Details:\u001B[0m");
                     System.out.println("\u001B[33mthe event is for user: " + email + "\u001B[0m");
                     System.out.println("\u001B[33mService Provider's Name: " + chosenProvider1.getName() + "\u001B[0m");
@@ -429,7 +456,8 @@ System.out.println("there is no venue with your budget/needed size");
 Event event=new Event(email,chosenProvider1.getName(),chosenProvider1.getId(),chosenProvider1.getEmail(),chosenProvider1.getServicesList(),venName,date,chosenBudget1);
                     writeEventToFile(event);
 
-                } else {
+                }
+                else {
                     System.out.println("Event confirmation cancelled.");
                 }
             } else {

@@ -42,6 +42,18 @@ public class ApproveApp {
      out.println("Total number of pending events: " + pendingEventsCount);
      return true;
  }
+    public static boolean aListOfApprovedEvents() {
+        EventData events = new EventData();
+        int pendingEventsCount = 0;
+        for (Event event : events.getEventsList()) {
+            if (event.getStatus() == Event.Status.APPROVED) {
+                out.println(event);
+                pendingEventsCount++;
+            }
+        }
+        out.println("Total number of Upcoming events: " + pendingEventsCount);
+        return true;
+    }
 
 
     public static boolean selectsAnEventToReview(String i) {
@@ -85,16 +97,16 @@ public class ApproveApp {
         return eventList;
     }
     public static void main(String[] args) {//print events in file
-        int id = 4;
+        String id = "5";
         String date = "8/4/2024";
-        matchIdWithDates(id, date);
+       matchIdWithDates(id, date);
       //aListOfPendingEventsAwaitingApproval();
 //selectsAnEventToReview("4");
  //changeEventStatus("4", "Approved");
      //   bookEvent(4,"8/4/2024");
     }
 
-    public static void matchIdWithDates(int id, String date) {
+    public static void matchIdWithDates(String id, String date) {
         readSPData("sp_price_dates.txt");
         SuperSPData object = new SuperSPData();
         List<List<String>> freeDates = object.getAllFreeDates();
@@ -105,7 +117,7 @@ public class ApproveApp {
         try {
             for (int i = 0; i < serviceProviderList.size(); i++) {
                 ServiceProviderClass serviceProvider = serviceProviderList.get(i);
-                if (serviceProvider.getId().equals(Integer.toString(id))) {
+                if (serviceProvider.getId().equals(id)) {
                     found = true;
                     System.out.println("\u001B[34mName: " + serviceProvider.getName() + "\u001B[0m"); // Blue color for name
                     System.out.println("ID: " + serviceProvider.getId());
@@ -136,10 +148,8 @@ public class ApproveApp {
                                 String addedDateStr = addedDate.format(formatter);
                                 freeDates.get(i).add(addedDateStr);
 
-                                // Remove the matched date from the list and file
+                                // Remove the matched date from the list
                                 dates.remove(j);
-                                updateFreeDates(freeDates, object.getAllBookedDates(), object.getAllBudgets());
-                                System.out.println("Date " + date + " removed successfully and added to booked dates.");
                                 break;
                             }
                         }
@@ -154,25 +164,35 @@ public class ApproveApp {
             if (!found) {
                 System.out.println("No match found for ID " + id);
             }
+
+            // After all updates, clear the file and rewrite the data
+            updateFreeDates(freeDates, object.getAllBookedDates(), object.getAllBudgets());
         } catch (Exception e) {
             System.out.println("Error occurred: " + e.getMessage());
         }
     }
+
 
     public static void updateFreeDates(List<List<String>> freeDates, List<List<String>> bookedDates, List<String> allBudgets) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("sp_price_dates.txt"));
 
             for (int i = 0; i < freeDates.size(); i++) {
+                // Clear the file before writing
+                writer.write("");
+
+                // Write budget
                 writer.write(allBudgets.get(i));
                 writer.newLine();
+
+                // Write free dates
                 List<String> dates = freeDates.get(i);
                 for (String date : dates) {
                     writer.write(date + " ");
                 }
                 writer.newLine();
 
-                // Add booked dates under free dates
+                // Write booked dates
                 List<String> booked = bookedDates.get(i);
                 if (!booked.isEmpty()) {
                     for (String bookedDate : booked) {
@@ -192,14 +212,15 @@ public class ApproveApp {
         }
     }
 
-    public static boolean changeEventStatus(String eventId, String statusChange) {
+
+    public static boolean changeEventStatus(String eventId, String statusChange, String date) {
         // Load events from file into a list
         EventData events = new EventData();
 
-        // Find and remove the event with the specified ID
+        // Find and remove the event with the specified ID and date
         Event eventToRemove = null;
         for (Event event : events.getEventsList()) {
-            if (event.getSP().getId().equals(eventId)) {
+            if (event.getSP().getId().equals(eventId) && event.getDate().equals(date)) {
                 eventToRemove = event;
                 break;
             }
@@ -207,7 +228,7 @@ public class ApproveApp {
         if (eventToRemove != null) {
             events.getEventsList().remove(eventToRemove);
         } else {
-            System.out.println("Event with ID " + eventId + " not found.");
+            System.out.println("Event with ID " + eventId + " and date " + date + " not found.");
             return false;
         }
 
@@ -215,18 +236,21 @@ public class ApproveApp {
         switch (statusChange.toUpperCase()) {
             case "APPROVED":{
                 eventToRemove.setStatus(Event.Status.APPROVED);
+                matchIdWithDates(eventId,date);
                 String recipientEmail = "s12113094@stu.najah.edu";
-                String subject = "you have new event !!";
-                String messageContent = "you have new event for the provider who's ID is "+eventId;
+                String subject = "You have a new event!";
+                String messageContent = "You have a new event for the provider with ID: " + eventId;
                 sendEmail(recipientEmail, subject, messageContent);
-                break;}
+                break;
+            }
             case "DECLINED":{
                 eventToRemove.setStatus(Event.Status.DECLINED);
                 String recipientEmail = "s12113094@stu.najah.edu";
-                String subject = "decline your event,please call us to more information";
-                String messageContent = "declined event with SP with ID equal "+eventId;
+                String subject = "Event Declined";
+                String messageContent = "Your event with the provider with ID: " + eventId + " has been declined.";
                 sendEmail(recipientEmail, subject, messageContent);
-                break;}
+                break;
+            }
             default:
                 System.out.println("Invalid status change. Please enter 'Approved' or 'Declined'.");
                 return false;
@@ -234,6 +258,7 @@ public class ApproveApp {
 
         // Add the modified event back to the list
         events.getEventsList().add(eventToRemove);
+
         // Write the updated events list back to the file
         try (FileWriter fw = new FileWriter("DataForEvents.txt");
              BufferedWriter bw = new BufferedWriter(fw);
@@ -248,6 +273,7 @@ public class ApproveApp {
         }
         return false;
     }
+
 
     public static void sendEmail(String recipientEmail, String subject, String messageContent) {
         String senderEmail = "raghadmoh.tha@gmail.com";

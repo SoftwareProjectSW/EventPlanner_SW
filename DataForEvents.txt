@@ -1,45 +1,48 @@
 Event{
-status: NOT_SEEN
+status: APPROVED
 customer email: hasan@gmail.com
-SP:
-Service Provider's INFO {
-NAME: Raghad
-ID: 4
-Email: raghad@gmail.com
-servicesList: [cook, DJ]
-}
-venue: Venue3
-date: 8/4/2024
-price: 2700$$
-}
-***
-Event{
-status: NOT_SEEN
-customer email: hasan@gmail.com
-SP:
+SP: 
 Service Provider's INFO {
 NAME: Huda
 ID: 5
 Email: huda@gmail.com
-servicesList: [DJ, designer, cook]
+servicesList: []
 }
 venue: Venue1
 date: 8/4/2024
 price: 2000$
 }
 ***
+
 Event{
 status: APPROVED
 customer email: hasan@gmail.com
-SP:
+SP: 
 Service Provider's INFO {
-NAME: Hala
-ID: 1
-Email: hala@gmail.com
+NAME: Raghad
+ID: 4
+Email: raghad@gmail.com
 servicesList: []
 }
-venue: Venue1
-date: 7/4/2024
-price: 3000$
+venue: Venue3
+date: 8/4/2024
+price: 2700$$
 }
 ***
+
+Event{
+status: NOT_SEEN
+customer email: hasan@gmail.com
+SP: 
+Service Provider's INFO {
+NAME: Raghad
+ID: 4
+Email: raghad@gmail.com
+servicesList: [cook, DJ]
+}
+venue: Venue1
+date: 1/4/2024
+price: 1800
+}
+***
+
