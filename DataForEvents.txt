@@ -1,36 +1,4 @@
 Event{
-status: APPROVED
-customer email: hasan@gmail.com
-SP: 
-Service Provider's INFO {
-NAME: Huda
-ID: 5
-Email: huda@gmail.com
-servicesList: []
-}
-venue: Venue1
-date: 8/4/2024
-price: 2000$
-}
-***
-
-Event{
-status: APPROVED
-customer email: hasan@gmail.com
-SP: 
-Service Provider's INFO {
-NAME: Raghad
-ID: 4
-Email: raghad@gmail.com
-servicesList: []
-}
-venue: Venue3
-date: 8/4/2024
-price: 2700$$
-}
-***
-
-Event{
 status: NOT_SEEN
 customer email: hasan@gmail.com
 SP: 
