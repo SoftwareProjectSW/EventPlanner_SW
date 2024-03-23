@@ -14,9 +14,31 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.8.2</junit.version>
+
     </properties>
 <dependencies>
 
+
+    <dependency>
+        <groupId>com.google.api-client</groupId>
+        <artifactId>google-api-client</artifactId>
+        <version>2.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>com.google.oauth-client</groupId>
+        <artifactId>google-oauth-client-jetty</artifactId>
+        <version>1.34.1</version>
+    </dependency>
+    <dependency>
+        <groupId>com.google.apis</groupId>
+        <artifactId>google-api-services-gmail</artifactId>
+        <version>v1-rev20220404-2.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>javax.mail</groupId>
+        <artifactId>mail</artifactId>
+        <version>1.4.7</version>
+    </dependency>
 
     <dependency>
         <groupId>org.junit.jupiter</groupId>
@@ -30,6 +52,12 @@
         <version>${junit.version}</version>
         <scope>test</scope>
     </dependency>
+    <dependency>
+        <groupId>com.sun.mail</groupId>
+        <artifactId>javax.mail</artifactId>
+        <version>1.6.2</version> <!-- Use the latest version available -->
+    </dependency>
+
     <dependency>
         <groupId>io.cucumber</groupId>
         <artifactId>cucumber-picocontainer</artifactId>
@@ -53,4 +81,5 @@
         <scope>test</scope>
     </dependency>
 </dependencies>
+
 </project>

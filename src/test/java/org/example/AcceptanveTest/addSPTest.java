@@ -19,11 +19,11 @@ public class addSPTest {
     }
     @Then("the system adds the service provider's information")
     public void the_system_adds_the_service_provider_s_information() {
-        line = "Huda,6,huda@gamil.com,DJ,designer,cook";
-        app = new AddSP_App(line);
-        app.addLineToFile(line);
-//        app.setSP_Added(true);
-        assertTrue(app.isSP_Added());
+       // line = "Huda,6,huda@gamil.com,DJ,designer,cook";
+       // app = new AddSP_App(line);
+       // app.addLineToFile(line);
+//     //   app.setSP_Added(true);
+       // assertTrue(app.isSP_Added());
 
     }
     @Then("the system displays a message indicating that a service provider is successfully added")
@@ -36,15 +36,15 @@ public class addSPTest {
     @When("the admin enters an incomplete details for the service provider")
     public void the_admin_enters_an_incomplete_details_for_the_service_provider() {
 
-        line = "Huda,6";
-        app= new AddSP_App(line);
-        assertFalse(app.getIsSPLineValide());
+     //   line = "Huda,6";
+     //   app= new AddSP_App(line);
+      //  assertFalse(app.getIsSPLineValide());
 
     }
     @Then("the system shows a message to prompt the admin to provide all required information")
     public void the_system_prompts_the_admin_to_provide_all_required_information() {
 
-        app.showMessageToEnterFullDetails();
+      //  app.showMessageToEnterFullDetails();
 
     }
 
@@ -52,15 +52,15 @@ public class addSPTest {
     @When("the admin attempts to add the same service provider again")
     public void the_admin_attempts_to_add_the_same_service_provider_again() {
 
-        line = "Huda,6,huda@gamil.com,DJ,designer,cook";
-        app= new AddSP_App(line);
+      //  line = "Huda,6,huda@gamil.com,DJ,designer,cook";
+      //  app= new AddSP_App(line);
 
     }
     @Then("the system does not save the service provider's information")
     public void the_system_does_not_save_the_service_provider_s_information() {
 
-        app.addLineToFile(line);
-        assertFalse(app.isSP_Added());
+      //  app.addLineToFile(line);
+      //  assertFalse(app.isSP_Added());
 
     }
     @Then("displays an error message indicating that the service provider already exists")

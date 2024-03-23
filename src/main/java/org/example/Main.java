@@ -1,14 +1,26 @@
 package org.example;
 
 import APP.*;
-import DataB.AdminData;
+import DataB.*;
+
+import io.cucumber.java.an.E;
 import org.example.AdminClass;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+import static DataB.SuperSPData.readSPData;
+import static org.example.Event.writeEventToFile;
+import static org.example.SuperSPClass.serviceProviderData;
+
+
 public class Main {
+    static String email =null;
+
     public static void displaying(){
         logger.info("|________________________________________________________|\n");
     }
@@ -29,24 +41,33 @@ public class Main {
 
     private static final Logger logger = LoggerUtility.getLogger();
     private static Scanner in = new Scanner(System.in);
+    SuperSPData booking_obj=new SuperSPData();
 
     public static void menu(){
         displayupline();
-        logger.info("|       Welcome to Event Planner Services System :)     |\n");
-        logger.info("| 1- If you want to login as an admin                |\n");
-        logger.info("| 2- If you want to login as an user                |\n");
-        logger.info("| 3- If you want to login as an service provider               |\n");
+        logger.info("|       Welcome to Event Planner Services System :)     \n");
+        logger.info("| 1- If you want to login as an admin                \n");
+        logger.info("| 2- If you want to login as an user                \n");
+        logger.info("| 3- If you want to login as an organizer               \n");
         logger.info("|___________________________________________________|\n");
     }
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException {
+      //  readSPData("sp_price_dates.txt");
         int option = 0;
-        String email;
-        String password;
-        while(true) {
+        String password = null;
+         boolean displayMainMenu = true;
+         boolean promptForCredentials = true;
+         boolean displayUserMenu = true;
+         boolean displayPackageMenu=true;
+
+        while (true) {
             try {
-                menu();
-                option = in.nextInt();
+                if (displayMainMenu) {
+                    menu();
+                    option = in.nextInt();
+                }
             } catch (InputMismatchException e) {
                 displayupline();
                 displayEnterValidNumber();
@@ -55,51 +76,174 @@ public class Main {
                 continue;
             }
 
-            displayupline();
-            logger.warning("|             WELCOME TO LOGIN PAGE                |\n");
-            displaydownline();
+            if (promptForCredentials) {
+                displayupline();
+                logger.warning("|             WELCOME TO LOGIN PAGE                \n");
+                displaydownline();
 
-            logger.info("Enter your email:");
-            email = in.next();
-            logger.info("Enter your password:");
-            password = in.next();
+                logger.info("Enter your email:");
+                email = in.next();
+                logger.info("Enter your password:");
+                password = in.next();
+            }
 
             if (option == 1) {
                 LogInAsAdmin adminApp = new LogInAsAdmin();
-                AdminClass admin = new AdminClass(email ,password) ;
-                adminApp.loggInCheck(email,password);
-                if (adminApp.isLoggedIn()){
-                    for(AdminClass a : AdminData.getAdminList()){
-                        if(a.getEmail().equals(email)){
+                AdminClass admin = new AdminClass(email, password);
+                adminApp.loggInCheck(email, password);
+                if (adminApp.isLoggedIn()) {
+                    for (AdminClass a : AdminData.getAdminList()) {
+                        if (a.getEmail().equals(email)) {
                             admin = a;
                         }
                     }
-                    logger.info("WELCOME Admin "+ admin.getEmail()+ "\n");
+                    logger.info("WELCOME Admin " + admin.getEmail() + "\n");
                     while (true) {
                         displayupline();
-                        logger.info("|       Welcome to Admin page :)                   |\n");
-                        logger.info("| 1- Add new Super Provider                                    |\n");
+                        logger.info("|       Welcome to Admin page :)                   \n");
+                        logger.info("| 1- Add new Super Provider                                    \n");
                         logger.info("| 2- view information about service provider                                       |\n");
-                        logger.info("| 3-Delete                                  |\n");
-                        logger.info("| 4- Log Out                                       |\n");
+                        logger.info("| 3-Delete                                  \n");
+                        logger.info("| 4- Log Out                                       \n");
                         displaydownline();
                         int optionadmin = in.nextInt();
-                        if(optionadmin==1){
+                        if (optionadmin == 1) {
                             addSP();
-                        }
-                       else if (optionadmin == 2) {
+                        } else if (optionadmin == 2) {
                             viewServiceProviderOptions();
-                        }
-                       else if(optionadmin==3){
-                           deleteSp();
-                        }
-                        else if(optionadmin==4)
+                        } else if (optionadmin == 3) {
+                            deleteSp();
+                        } else if (optionadmin == 4) {
                             break;
-                           // System.exit(0);//may set it as break to return to main role menu , and clear the commandline
+                        }
                     }
                 }
             }
+            else if (option == 2) {
+                LogInAsUser userApp = new LogInAsUser();
+                UserClass user = new UserClass(email, password);
+                userApp.loggInCheck(email, password);
+                if (userApp.isLoggedIn()) {
+                    for (UserClass a : UserData.getUserList()) {
+                        if (a.getEmail().equals(email)) {
+                            user = a;
+                        }
+                    }
+                    while (true) {
+                        if (displayUserMenu) {
+                            logger.info("WELCOME Mr./Ms. " + user.getEmail() + "\n");
+                            displayupline();
+                            logger.info("|       Welcome to User page :)                   |\n");
+                            logger.info("| 1- Book new Event                                    |\n");
+                            logger.info("| 2- Log out                                      |\n");
+                            displaydownline();
+                         //   displayUserMenu = false;
+                        }
+                        int optionuser = in.nextInt();
+                        if (optionuser == 1) {
+                            Scanner n=new Scanner(System.in);
+                            System.out.println("Please enter your available budget for booking the event with this format 0000$ : ");
+                            String budget = n.nextLine();
+                            SuperSPData o=new SuperSPData();
+                            packageDetails op=new packageDetails();
+                            readSPData(o.SPFile);
+                            if( Integer.parseInt(budget.replace("$", ""))<=o.findMinValue(o.getAllBudgets())){
+                                op.theUserIsNotifiedOfTheBudgetInvalid1(Integer.parseInt(budget.replace("$", "")));
+                                displayPackageMenu=true;
+                                System.out.println("\u001B[31myou can just choose one of these actions to continue:\u001B[0m");
+                                if (displayPackageMenu) {
+                                    displayupline();
+                                    logger.info("| 1-choose one of the packages                                    \n");
+                                    logger.info("| 2- retry booking with higher budget                                     \n");
+                                    displaydownline();
+                                 //   displayPackageMenu = false;
+                                }
+                                Scanner c=new Scanner(System.in);
+                                int choose=c.nextInt();
+                                if(choose==1){
+                                   System.out.println("please enter the number of package you need");
+                                    //here if we have this serial , cont
+                                    //if not op.theuserisnotified but from new class
+                                    int numPackage=c.nextInt();
+                                  boolean pa=  op.theSystemShouldDisplayTheFullInformationAboutThePackage(numPackage,Integer.parseInt(budget.replace("$", "")),email);
+                                  if(pa==false){
+                                      System.out.println("please enter the number of package you need");
+                                      Scanner v=new Scanner(System.in);
+                                      int reread=v.nextInt();
+                                     op.theSystemShouldDisplayTheFullInformationAboutThePackage(reread,Integer.parseInt(budget.replace("$", "")),email);
+                                  }
+                                    displayUserMenu = true;
+                                  //call the event class to send object to fill in file
+
+                                }
+                          else if(choose==2){
+                               displayUserMenu = true;
+break;
+                                       }
+
+                            }
+                            else {
+                                bookingFunction(budget);
+
+                              //  displayMainMenu = false;
+                                promptForCredentials = false;
+                               displayUserMenu = true;
+
+                                break;
+                            }
+                        } else if (optionuser == 2) {
+
+                        displayMainMenu = true;
+                           break;
+                        }
+                    }
+                }
+            }
+
+
+            else  if (option == 3) {
+                LoginOrgApp orgApp = new LoginOrgApp();
+                Organizer org = new Organizer(email, password);
+                orgApp.loggInCheck(email, password);
+                if (orgApp.isLoggedIn()) {
+                    for (Organizer a : OrganizerData.getorganizersList()) {
+                        if (a.getEmail().equals(email)) {
+                            org = a;
+                        }
+                    }
+                    logger.info("WELCOME Organizer " + org.getEmail() + "\n");
+                    while (true) {
+                        displayupline();
+                        logger.info("|       Welcome to Organizer page :)                   \n");
+                        logger.info("| 1- View Pinned Events                                  \n");
+                        logger.info("| 2-                                      |\n");
+                        logger.info("| 3-                                \n");
+                        logger.info("| 4- Log Out                                       \n");
+                        displaydownline();
+                        int optionadmin = in.nextInt();
+                        if (optionadmin == 1) {
+ApproveApp app=new ApproveApp();
+app.aListOfPendingEventsAwaitingApproval();
+Scanner i=new Scanner(System.in);
+System.out.println("\u001B[33mplease enter the id of SP that have events to review :\u001B[0m ");
+String id=i.nextLine();
+System.out.println("\u001B[33mplease write the new statue approved/decline:\u001B[0m");
+String status=i.nextLine();
+app.changeEventStatus(id,status);
+
+
+                        }
+                        else if (optionadmin == 2) {
+                        } else if (optionadmin == 3) {
+                        } else if (optionadmin == 4) {
+                            displayMainMenu=true;
+                            break;
+                        }
+                    }
+                }
+            }//end organizer section
         }
+
     }
 
     public static void viewServiceProviderOptions() {
@@ -171,4 +315,138 @@ delete.removeServiceProviderByName(name);
             }
         }
     }
+
+    public static void bookingFunction(String budget) {
+        EnteredBudget ob = new EnteredBudget();
+        ob.aSufficientBudgetProvidedByTheUser(budget);
+        System.out.println("\u001B[33mYou can choose one of these providers:\u001B[0m");
+        ob.theSelectedServiceProviderHasAvailabilityOnTheRequiredDate(budget);
+        System.out.println("\u001B[33mNow please choose the provider you want, according to the services he provides,\u001B[0m");
+        System.out.println("\u001B[33mand then enter the ID of the provider you choose to show the available dates:\u001B[0m");
+        System.out.println("Enter the ID:");
+        Scanner scanner = new Scanner(System.in);
+        int id = scanner.nextInt();
+        System.out.println("\u001B[33mHere are the full details about the provider you chose:\u001B[0m");
+        ob.theUserSubmitsTheBudgetAndDate(id);
+
+        SuperSPData object = new SuperSPData(); // Assuming you have an instance of SuperSPData
+        List<ServiceProviderClass> serviceProviderList = serviceProviderData.getServiceProviderList();
+        boolean hasUnavailableDates = false;
+        for (int y = 0; y < serviceProviderList.size(); y++) {
+            ServiceProviderClass serviceProvider = serviceProviderList.get(y);
+            if (serviceProvider.getId().equals(Integer.toString(id))) {
+                List<List<String>> freeDates = object.getAllFreeDates();
+                if (y < freeDates.size()) {
+                    List<String> dates = freeDates.get(y);
+                    for (String date : dates) {
+                        if (date.equals("---")) {
+                            hasUnavailableDates = true;
+                            break; // Exit the loop if any date is marked as '---'
+                        }
+                    }
+                }
+                break;
+            }
+        }
+
+        if (hasUnavailableDates) {
+            System.out.println("\u001B[31mThis provider has no available dates. Please choose another provider.\u001B[0m");
+            bookingFunction(budget); // Recursively call the booking function to re-enter the ID
+            return; // Exit the function after re-entering the ID
+        }
+
+        // If the selected provider has available dates, prompt the user to enter the date
+        System.out.println("the provider's ID is : " + id);
+        System.out.println("\u001B[33mPlease enter the Date you wish to reserve with this format D/M/Y :\u001B[0m");
+        String day = scanner.nextLine();
+        // Ensure that the entered date is not an empty string (i.e., the user didn't just press Enter)
+        while (day.isEmpty()) {
+            day = scanner.nextLine();
+        }
+        // Confirm the event with the entered date
+        checkAndConfirmEvent(day, id, budget);
+    }
+
+
+    static Scanner scanner = new Scanner(System.in);
+    static List<ServiceProviderClass> chosenProviders = new ArrayList<>();
+    public static void checkAndConfirmEvent(String date, int id,String budget) {
+        SuperSPData object = new SuperSPData();
+
+        List<List<String>> freeDates = object.getAllFreeDates();
+
+        try {
+            String venueSelected="";
+
+            List<String> dates = freeDates.get(id - 1);
+            if (dates.contains(date)) {
+                List<ServiceProviderClass> serviceProviderList = serviceProviderData.getServiceProviderList();
+
+                ServiceProviderClass chosenProvider = serviceProviderList.get(id - 1);
+
+                List<String> allBudgets = object.getAllBudgets();
+                String chosenBudget = allBudgets.get(id - 1);
+                double venueBudget=Double.parseDouble(budget.replace("$", ""))-Double.parseDouble(chosenBudget.replace("$", ""));
+                System.out.println("please now select venue knowing that the remaining budget is :"+venueBudget);
+                System.out.println("please enter the number of chairs");
+                Scanner v=new Scanner(System.in);
+                int size= v.nextInt();
+                ReserveVenueApp resApp=new ReserveVenueApp();
+                boolean ve=resApp.reserveVenue(venueBudget,size);
+                if(ve){
+                 do{
+                     System.out.println("please choose one of the venues");
+                     Scanner inn=new Scanner(System.in);
+                     int y= inn.nextInt();
+                     venueSelected= resApp.getSelectedVenue(venueBudget,size,y)  ;
+                 }while(venueSelected.equals(" index out of range "));
+
+                }
+                //else choose package for the main budget
+if(venueSelected.equals(""))
+System.out.println("there is no venue with your budget/needed size");
+                System.out.println("Do you want to confirm the event? (yes/no)");
+                String confirm = scanner.nextLine();
+                if (confirm.equalsIgnoreCase("yes")) {
+                    List<ServiceProviderClass> serviceProviderList1 = serviceProviderData.getServiceProviderList();
+
+                    ServiceProviderClass chosenProvider1 = serviceProviderList1.get(id - 1);
+
+                    List<String> allBudgets1 = object.getAllBudgets();
+                    String chosenBudget1 = allBudgets1.get(id - 1);
+
+                    System.out.println("\u001B[33mConfirmation Details:\u001B[0m");
+                    System.out.println("\u001B[33mthe event is for user: " + email + "\u001B[0m");
+                    System.out.println("\u001B[33mService Provider's Name: " + chosenProvider1.getName() + "\u001B[0m");
+                    System.out.println("\u001B[33mProvider's ID: " + chosenProvider1.getId() + "\u001B[0m");
+                    System.out.println("\u001B[33mEmail: " + chosenProvider1.getEmail() + "\u001B[0m");
+                    System.out.println("\u001B[33mServices: " + chosenProvider1.getServicesList() + "\u001B[0m");
+                    System.out.println("\u001B[33mPrice: " + chosenBudget1 + "\u001B[0m");
+                    System.out.println("\u001B[33mDate: " + date + "\u001B[0m");
+                    System.out.println("\u001B[33mVenue choosed: " + venueSelected + "\u001B[0m");
+
+                    String venName = VenueClass.extractName(venueSelected);
+Event event=new Event(email,chosenProvider1.getName(),chosenProvider1.getId(),chosenProvider1.getEmail(),chosenProvider1.getServicesList(),venName,date,chosenBudget1);
+                    writeEventToFile(event);
+
+                } else {
+                    System.out.println("Event confirmation cancelled.");
+                }
+            } else {
+                System.out.println("Date not available for confirmation. Please try another date.");
+                System.out.println("Enter a new date (yyyy-MM-dd):");
+                String newDate = scanner.nextLine();
+                checkAndConfirmEvent(newDate, id,budget); // Recursively call the function with the new date
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.err.println("Invalid ID provided.");
+        }
+    }
+
+
+
 }
+
+
+
+

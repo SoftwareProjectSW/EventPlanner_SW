@@ -25,6 +25,7 @@ this.password=pass;
     }
     @Then("the admin will not login")
     public void theAdminWillNotLogin() {
+
         LogApp.loggInCheck(email,password);
         assertFalse(LogApp.isLoggedIn());
 

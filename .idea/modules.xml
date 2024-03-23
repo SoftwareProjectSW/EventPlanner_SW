@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EventPlanner_Software.iml" filepath="$PROJECT_DIR$/EventPlanner_Software.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../email/email.iml" filepath="$PROJECT_DIR$/../email/email.iml" />
     </modules>
   </component>
 </project>
