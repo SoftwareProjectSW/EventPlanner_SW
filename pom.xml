@@ -7,7 +7,6 @@
     <groupId>org.example</groupId>
     <artifactId>EventPlanner_Software</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <properties>
              <sonar.organization>softwareprojectsw</sonar.organization>
   <sonar.host.url>https://sonarcloud.io</sonar.host.url>
