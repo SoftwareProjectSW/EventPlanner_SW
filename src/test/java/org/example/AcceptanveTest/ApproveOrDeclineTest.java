@@ -27,14 +27,14 @@ assertTrue(app.selectsAnEventToReview(i));
     public void approvesTheEvent() {
 String id="4";
 String status="Approved";
-String date="8/4/2024";
+String date="1/4/2024";
 assertTrue(app.changeEventStatus(id,status,date));
     }
     @Then("the event status should be updated to {string} in the events file")
     public void theEventStatusShouldBeUpdatedToInTheEventsFile(String string) {
         String id="4";
         String status="Approved";
-        String date="8/4/2024";
+        String date="1/4/2024";
         assertTrue(app.changeEventStatus(id,status,date));
     }
     @Then("a notification should be sent to the customer and provider confirming event approval")
