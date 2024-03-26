@@ -64,7 +64,6 @@ public class AddSP_App {
             return false;
         }
 
-        // Check if the second field (unique id) is an integer
         try {
             Integer.parseInt(fields[1]);
         } catch (NumberFormatException e) {
@@ -77,17 +76,14 @@ public class AddSP_App {
             return false;
         }
 
-        // Check if the email field (third field) has "@" and ends with ".com"
         if (!fields[2].contains("@") || !fields[2].endsWith(".com")) {
             System.out.println("make sure to enter an valid email format such as username@gmale.com !");
             return false;
         }
 
-        // If all conditions pass, return true
         return true;
     }
 
-    // Method to add a line to the file if it meets the required conditions
     public  void addLineToFile(String line) {
         ServiceProviderData sp = new ServiceProviderData();
 
@@ -106,13 +102,10 @@ public class AddSP_App {
                     if (fields.length >= 2) {
                         ids.add(fields[1]); // Add unique ids to the set
                     }
-                    // Add unique ids to the set
                 }
 
-                // Check if the unique id of the new line is already present
                 String[] newFields = line.split(",");
                 if (!ids.contains(newFields[1])) {
-                    // Append the line to the file
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
                         writer.write(line);
                         writer.newLine();

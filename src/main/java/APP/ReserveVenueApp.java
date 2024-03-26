@@ -142,23 +142,6 @@ public class ReserveVenueApp {
         return "valid"; // No error
     }
 
-//    public static void main(String[] args){
-//        Double b ;
-//        Integer size;
-//        Scanner scanner = new Scanner(System.in);
-//        b = scanner.nextDouble();
-//        size = scanner.nextInt();
-//
-//
-//        ReserveVenueApp app = new ReserveVenueApp();
-//        boolean f = app.reserveVenue(b,size);
-//        if (f){
-//
-//            Integer i ;
-//            i = scanner.nextInt();
-//            System.out.println(app.getSelectedVenue(b,size,i));
-//        }
 
-//    }
 
 }

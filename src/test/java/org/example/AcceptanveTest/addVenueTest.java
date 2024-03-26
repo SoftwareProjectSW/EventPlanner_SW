@@ -27,11 +27,6 @@ public class addVenueTest {
     @Then("the new venue should be added to the system successfully")
     public void the_new_venue_should_be_added_to_the_system_successfully() {
 
-//        this.venueName = "7Dreams";
-//        this.venueCapacity = 400;
-//        this.venuePrice = 500.0;
-//        boolean flag =app.isAddedVenue(venueName,venueCapacity,venuePrice);
-//        assertTrue(flag);
 
 
     }

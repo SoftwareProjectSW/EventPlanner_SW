@@ -130,16 +130,9 @@ public class EnteredBudget {
         }
         return found;
     }
-   /* public boolean theUserIsNotifiedOfTheBudgetInvalid(int price) throws IOException {
-        System.out.println("\u001B[31mThe budget is not valid. Please make sure that you have enough budget,and you can choose one of this packages\u001B[0m");
-        printSuitablePackage(price);
-        return true;
-    }*/
+
 
      public static void main(String[] args) throws IOException {
-    // theSelectedServiceProviderHasAvailabilityOnTheRequiredDate("3500$");
-    //  theUserSubmitsTheBudgetAndDate(6);
-     //    printPackageBySerialNumber(3);
 
      }
 

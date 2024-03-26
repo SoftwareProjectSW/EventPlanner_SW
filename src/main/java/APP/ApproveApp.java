@@ -64,7 +64,6 @@ public class ApproveApp {
                 return true; // Exit the loop after printing the event
             }
         }
-        // If the loop completes without finding a match
         out.println("Event with ID " + i + " not found.");
         return false; // Return false since the event was not found
     }
@@ -76,7 +75,6 @@ public class ApproveApp {
         try (FileWriter fw = new FileWriter("DataForEvents.txt", true);
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
-            // Append the serialized event information to the file
             out.println(event.serialize());
             System.out.println("Event information written to file successfully.");
         } catch (IOException e) {
@@ -99,11 +97,7 @@ public class ApproveApp {
     public static void main(String[] args) {//print events in file
         String id = "5";
         String date = "8/4/2024";
-       matchIdWithDates(id, date);
-      //aListOfPendingEventsAwaitingApproval();
-//selectsAnEventToReview("4");
- //changeEventStatus("4", "Approved");
-     //   bookEvent(4,"8/4/2024");
+        matchIdWithDates(id, date);
     }
 
     public static void matchIdWithDates(String id, String date) {

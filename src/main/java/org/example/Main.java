@@ -3,8 +3,6 @@ package org.example;
 import APP.*;
 import DataB.*;
 
-import io.cucumber.java.an.E;
-import org.example.AdminClass;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +17,9 @@ import static org.example.SuperSPClass.serviceProviderData;
 
 
 public class Main {
+  static   boolean displayMainMenu = true;
+  static   boolean displayUserMenu = true;
+
     static String email =null;
 
     public static void displaying(){
@@ -57,9 +58,9 @@ public class Main {
       //  readSPData("sp_price_dates.txt");
         int option = 0;
         String password = null;
-         boolean displayMainMenu = true;
+       //  boolean displayMainMenu = true;
          boolean promptForCredentials = true;
-         boolean displayUserMenu = true;
+      //   boolean displayUserMenu = true;
          boolean displayPackageMenu=true;
         boolean displayOrgMenu = true;
 
@@ -70,6 +71,8 @@ public class Main {
                     menu();
                     option = in.nextInt();
                 }
+                option = in.nextInt();
+
             } catch (InputMismatchException e) {
                 displayupline();
                 displayEnterValidNumber();
@@ -164,8 +167,7 @@ public class Main {
                                 int choose=c.nextInt();
                                 if(choose==1){
                                    System.out.println("please enter the number of package you need");
-                                    //here if we have this serial , cont
-                                    //if not op.theuserisnotified but from new class
+
                                     int numPackage=c.nextInt();
                                   boolean pa=  op.theSystemShouldDisplayTheFullInformationAboutThePackage(numPackage,Integer.parseInt(budget.replace("$", "")),email);
                                   if(pa==false){
@@ -175,31 +177,37 @@ public class Main {
                                      op.theSystemShouldDisplayTheFullInformationAboutThePackage(reread,Integer.parseInt(budget.replace("$", "")),email);
                                   }
                                     displayUserMenu = true;
-                                  //call the event class to send object to fill in file
 
                                 }
                           else if(choose==2){
                                displayUserMenu = true;
-break;
+                               break;
                                        }
 
                             }
                             else {
                                 bookingFunction(budget);
-
+                                displayUserMenu = true;
                               //  displayMainMenu = false;
                                 promptForCredentials = false;
-                               displayUserMenu = true;
+
 
                                 break;
                             }
-                        } else if (optionuser == 2) {
 
-                        displayMainMenu = true;
-                           break;
+                          //  displayUserMenu=true;
+                         //   break;
                         }
+                        else if (optionuser == 2) {
+                            displayMainMenu= true;
+                          break;
+                       //   break;
+                        }
+
                     }
+
                 }
+
             }
 
 
@@ -390,6 +398,10 @@ delete.removeServiceProviderByName(name);
         }
         // Confirm the event with the entered date
         checkAndConfirmEvent(day, id, budget);
+         displayMainMenu=true;
+       // displayUserMenu=true;/////////////////////////
+      //  displayMainMenu=true;//////////////////////
+      //  break;
     }
 
 
@@ -457,6 +469,7 @@ Event event=new Event(email,chosenProvider1.getName(),chosenProvider1.getId(),ch
                     writeEventToFile(event);
 
                 }
+
                 else {
                     System.out.println("Event confirmation cancelled.");
                 }
@@ -469,6 +482,7 @@ Event event=new Event(email,chosenProvider1.getName(),chosenProvider1.getId(),ch
         } catch (IndexOutOfBoundsException e) {
             System.err.println("Invalid ID provided.");
         }
+
     }
 
 
