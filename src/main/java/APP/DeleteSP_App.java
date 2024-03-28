@@ -154,8 +154,13 @@ public class DeleteSP_App {
                     writer.newLine();
                 }
                 writer.close();
-                serviceProviderFile.delete();
-                tempFile.renameTo(serviceProviderFile);
+                final boolean delete;
+                if (serviceProviderFile.delete()) delete = true;
+                else delete = false;
+                final boolean b;
+                if (tempFile.renameTo(serviceProviderFile)) b = true;
+                else b = false;
+                
                 System.out.println("Service provider with name " + name + " deleted successfully.");
             } catch (IOException e) {
                 e.printStackTrace();
