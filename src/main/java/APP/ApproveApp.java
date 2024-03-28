@@ -60,8 +60,8 @@ public class ApproveApp {
     }
 
 
-
     
+ 
     public static void main(String[] args) {//print events in file
         String id = "5";
         String date = "8/4/2024";
@@ -95,17 +95,22 @@ public class ApproveApp {
                         boolean dateFound = false;
                         for (int j = 0; j < dates.size(); j++) {
                             String d = dates.get(j);
+                            // Match functionality here
                             if (d.equals(date)) {
+                                // Match found
                                 dateFound = true;
                                 System.out.println("Match found for date " + date + " at index " + j);
+                                // Add the deleted date plus 7 days to booked dates
                                 object.getAllBookedDates().get(i).add(date);
 
+                                // Add the deleted date plus 7 days to free dates
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
                                 LocalDate deletedDate = LocalDate.parse(date, formatter);
                                 LocalDate addedDate = deletedDate.plusDays(7);
                                 String addedDateStr = addedDate.format(formatter);
                                 freeDates.get(i).add(addedDateStr);
 
+                                // Remove the matched date from the list
                                 dates.remove(j);
                                 break;
                             }
@@ -122,6 +127,7 @@ public class ApproveApp {
                 System.out.println("No match found for ID " + id);
             }
 
+            // After all updates, clear the file and rewrite the data
             updateFreeDates(freeDates, object.getAllBookedDates(), object.getAllBudgets());
         } catch (Exception e) {
             System.out.println("Error occurred: " + e.getMessage());
@@ -163,8 +169,10 @@ public class ApproveApp {
     }
 
     public static boolean changeEventStatus(String eventId, String statusChange, String date) {
+        // Load events from file into a list
         EventData events = new EventData();
 
+        // Find and remove the event with the specified ID and date
         Event eventToRemove = null;
         for (Event event : events.getEventsList()) {
             if (event.getSP().getId().equals(eventId) && event.getDate().equals(date)) {
@@ -179,6 +187,7 @@ public class ApproveApp {
             return false;
         }
 
+        // Modify the status of the removed event
         switch (statusChange.toUpperCase()) {
             case "APPROVED":{
                 eventToRemove.setStatus(Event.Status.APPROVED);
@@ -202,8 +211,10 @@ public class ApproveApp {
                 return false;
         }
 
+        // Add the modified event back to the list
         events.getEventsList().add(eventToRemove);
 
+        // Write the updated events list back to the file
         try (FileWriter fw = new FileWriter("DataForEvents.txt");
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
