@@ -164,70 +164,51 @@ public void removeServiceProviderByName(String name) {
 }
 
 
-    public void removeServiceProviderById(String Id){
+  
+public void removeServiceProviderById(String Id) {
 
-        boolean flag = false;
-        setremoveByIdFlagFalse();
-        ServiceProviderData sp =new ServiceProviderData();
+    boolean flag = false;
+    setremoveByIdFlagFalse();
+    ServiceProviderData sp = new ServiceProviderData();
 
-        for (ServiceProviderClass temp : sp.getServiceProviderList()) {
-            if (Id.equals( temp.getId() )) {
-                flag = true;
-                setremoveByIdFlagTrue();
-            }
+    for (ServiceProviderClass temp : sp.getServiceProviderList()) {
+        if (Id.equals(temp.getId())) {
+            flag = true;
+            setremoveByIdFlagTrue();
         }
-
-        ServiceProviderData SPData = new ServiceProviderData();
-        File serviceProviderFile = new File("DataForSP.txt");
-
-        //enterServiceProviderName(name);
-
-        if (flag ) {
-            // Remove from ArrayList
-            SPData.getServiceProviderList().removeIf(provider -> provider.getId().equals(Id));
-
-            // Remove from file
-            BufferedWriter writer = null;
-            try {
-                File tempFile = new File("temp.txt");
-                writer = new BufferedWriter(new FileWriter(tempFile));
-
-                for (ServiceProviderClass provider : SPData.getServiceProviderList()) {
-                    writer.write(provider.getName() + "," + provider.getId() + "," + provider.getEmail());
-                    Integer i = 0;
-                    for (String Services : SPData.getServiceProviderList().get(i).getServicesList()) {
-                        writer.write("," + Services);
-
-                    }
-
-                    writer.newLine();
-                }
-                writer.close();
-                final boolean delete1;
-                if (serviceProviderFile.delete()) delete1 = true;
-                else delete1 = false;
-                final boolean bb;
-                if (tempFile.renameTo(serviceProviderFile)) bb = true;
-                else bb = false;
-                
-                System.out.println("Service provider with ID " + Id + " deleted successfully.");
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (writer != null) {
-                    try {
-                        writer.close();
-                    } catch (IOException e) {
-                        System.out.println("Error closing BufferedWriter: " + e.getMessage());
-                    }
-                }
-            }
-        } else {
-            System.out.println("No service provider found with the given ID.");
-        }
-
     }
 
+    ServiceProviderData SPData = new ServiceProviderData();
+    File serviceProviderFile = new File("DataForSP.txt");
+
+    if (flag) {
+        // Remove from ArrayList
+        SPData.getServiceProviderList().removeIf(provider -> provider.getId().equals(Id));
+
+        // Remove from file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("temp.txt"))) {
+            for (ServiceProviderClass provider : SPData.getServiceProviderList()) {
+                writer.write(provider.getName() + "," + provider.getId() + "," + provider.getEmail());
+                Integer i = 0;
+                for (String Services : SPData.getServiceProviderList().get(i).getServicesList()) {
+                    writer.write("," + Services);
+                }
+
+                writer.newLine();
+            }
+            writer.close();
+            if (serviceProviderFile.delete() && new File("temp.txt").renameTo(serviceProviderFile)) {
+                System.out.println("Service provider with ID " + Id + " deleted successfully.");
+            } else {
+                System.out.println("Error occurred while deleting the service provider.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    } else {
+        System.out.println("No service provider found with the given ID.");
+    }
+}
 
     public boolean checkExistence(String name){
 
