@@ -1,4 +1,4 @@
-package APP;
+package app;
 
 import org.example.Event;
 import org.example.ServiceProviderClass;

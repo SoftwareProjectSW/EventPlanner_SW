@@ -1,4 +1,4 @@
-package APP;
+package app;
 
 import DataB.VenueData;
 import org.example.ColoredOutput;

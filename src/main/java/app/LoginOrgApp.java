@@ -1,10 +1,9 @@
-package APP;
+package app;
 
-import DataB.UserData;
-import org.example.UserClass;
+import DataB.OrganizerData;
+import org.example.Organizer;
 
-
-public class LogInAsUser {
+public class LoginOrgApp {
     private boolean loginFlag=false;
     public boolean isLoggedIn() {
 
@@ -22,17 +21,17 @@ public class LogInAsUser {
         if (e.isEmpty() || p.isEmpty()) {
             System.out.println("empty email or password");
         }
-        else        System.out.println("Invalid email or password");
+        else System.out.println("Invalid email or password");
 
 
 
     }
     public void loggInCheck(String email, String password) {
-        UserData a=new UserData();
-        String file="usersData.txt";
-        a.readUserDataFromFile(file);
-        for (UserClass user : a.getUserList()) {
-            if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
+        OrganizerData Org = new OrganizerData();
+        String file = "DataForOrganizer.txt";
+
+        for (Organizer temp : Org.getorganizersList()) {
+            if (email.equals(temp.getEmail()) && password.equals(temp.getPassword())) {
                 login();
                 return;
             }

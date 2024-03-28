@@ -1,4 +1,4 @@
-package APP;
+package app;
 
 import DataB.AdminData;
 import DataB.ServiceProviderData;

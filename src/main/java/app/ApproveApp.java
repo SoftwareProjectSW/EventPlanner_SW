@@ -1,4 +1,4 @@
-package APP;
+package app;
 
 import DataB.EventData;
 import DataB.SuperSPData;
