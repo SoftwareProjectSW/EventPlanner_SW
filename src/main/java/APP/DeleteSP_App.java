@@ -223,8 +223,13 @@ public class DeleteSP_App {
                     writer.newLine();
                 }
                 writer.close();
-                serviceProviderFile.delete();
-                tempFile.renameTo(serviceProviderFile);
+                final boolean delete1;
+                if (serviceProviderFile.delete()) delete1 = true;
+                else delete1 = false;
+                final boolean bb;
+                if (tempFile.renameTo(serviceProviderFile)) bb = true;
+                else bb = false;
+                
                 System.out.println("Service provider with ID " + Id + " deleted successfully.");
             } catch (IOException e) {
                 e.printStackTrace();
