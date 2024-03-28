@@ -65,9 +65,10 @@ public class EventData {
             // Process the last event if any
             if (eventString.length() > 0) {
                 Event event = createEventFromString(eventString.toString());
-             
+                             if (event != null) {
+
                     events.add(event);
-                
+                             }
             }
         } catch (IOException e) {
             e.printStackTrace();
