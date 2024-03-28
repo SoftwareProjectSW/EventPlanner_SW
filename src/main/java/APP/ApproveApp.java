@@ -20,15 +20,7 @@ import static DataB.SuperSPData.readSPData;
 import static java.lang.System.out;
 
 public class ApproveApp {
- /* public static boolean aListOfPendingEventsAwaitingApproval(){
-      EventData events = new EventData();
-      for (Event event : events.getEventsList()) {
-          out.println(event);
-      }
-
-      out.println(events.getEventsList().size());
-      return true;
-  }*/
+ 
 
  public static boolean aListOfPendingEventsAwaitingApproval() {
      EventData events = new EventData();
@@ -71,29 +63,9 @@ public class ApproveApp {
 
 
 
-    private static void writeEventsToFile1( Event event) {
-        try (FileWriter fw = new FileWriter("DataForEvents.txt", true);
-             BufferedWriter bw = new BufferedWriter(fw);
-             PrintWriter out = new PrintWriter(bw)) {
-            out.println(event.serialize());
-            System.out.println("Event information written to file successfully.");
-        } catch (IOException e) {
-            System.err.println("Error writing event information to file: " + e.getMessage());
-        }
-    }
+ 
 
-    private static List<Event> loadEventsFromFile() {
-        List<Event> eventList = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("DataForEvents.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-
-            }
-        } catch (IOException e) {
-            out.println("An error occurred while reading from the file: " + e.getMessage());
-        }
-        return eventList;
-    }
+   
     public static void main(String[] args) {//print events in file
         String id = "5";
         String date = "8/4/2024";
