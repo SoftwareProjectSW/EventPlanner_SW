@@ -52,9 +52,9 @@ public class EventData {
                 if (line.equals("***")) {
                     if (eventString.length() > 0) {
                         Event event = createEventFromString(eventString.toString());
-                        if (event != null) {
+                   
                             events.add(event);
-                        }
+                        
                     }
                     eventString = new StringBuilder();
                 } else {
