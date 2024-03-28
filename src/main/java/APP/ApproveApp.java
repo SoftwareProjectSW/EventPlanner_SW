@@ -11,7 +11,6 @@ import javax.mail.internet.MimeMessage;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -20,7 +19,7 @@ import static DataB.SuperSPData.readSPData;
 import static java.lang.System.out;
 
 public class ApproveApp {
- 
+
 
  public static boolean aListOfPendingEventsAwaitingApproval() {
      EventData events = new EventData();
@@ -63,9 +62,9 @@ public class ApproveApp {
 
 
 
- 
 
-   
+
+
     public static void main(String[] args) {//print events in file
         String id = "5";
         String date = "8/4/2024";
@@ -78,68 +77,82 @@ public class ApproveApp {
         List<List<String>> freeDates = object.getAllFreeDates();
         List<ServiceProviderClass> serviceProviderList = serviceProviderData.getServiceProviderList();
 
-        boolean found = false;
+        boolean found = findServiceProviderAndPrintDetails(id, date, freeDates, serviceProviderList, object);
 
+        if (!found) {
+            System.out.println("No match found for ID " + id);
+        }
+
+        updateFreeDates(freeDates, object.getAllBookedDates(), object.getAllBudgets());
+    }
+
+    private static boolean findServiceProviderAndPrintDetails(String id, String date, List<List<String>> freeDates, List<ServiceProviderClass> serviceProviderList, SuperSPData object) {
         try {
             for (int i = 0; i < serviceProviderList.size(); i++) {
                 ServiceProviderClass serviceProvider = serviceProviderList.get(i);
                 if (serviceProvider.getId().equals(id)) {
-                    found = true;
-                    System.out.println("\u001B[34mName: " + serviceProvider.getName() + "\u001B[0m"); // Blue color for name
-                    System.out.println("ID: " + serviceProvider.getId());
-                    System.out.println("Email: " + serviceProvider.getEmail());
-                    System.out.print("Services: ");
-                    for (String service : serviceProvider.getServicesList()) {
-                        System.out.print(service + " ");
-                    }
-                    System.out.println("\nFree Dates: ");
-
-                    if (i < freeDates.size()) {
-                        List<String> dates = freeDates.get(i);
-                        boolean dateFound = false;
-                        for (int j = 0; j < dates.size(); j++) {
-                            String d = dates.get(j);
-                            // Match functionality here
-                            if (d.equals(date)) {
-                                // Match found
-                                dateFound = true;
-                                System.out.println("Match found for date " + date + " at index " + j);
-                                // Add the deleted date plus 7 days to booked dates
-                                object.getAllBookedDates().get(i).add(date);
-
-                                // Add the deleted date plus 7 days to free dates
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
-                                LocalDate deletedDate = LocalDate.parse(date, formatter);
-                                LocalDate addedDate = deletedDate.plusDays(7);
-                                String addedDateStr = addedDate.format(formatter);
-                                freeDates.get(i).add(addedDateStr);
-
-                                // Remove the matched date from the list
-                                dates.remove(j);
-                                break;
-                            }
-                        }
-                        if (!dateFound) {
-                            System.out.println("Date " + date + " not found for ID " + id);
-                        }
-                    }
-                    break;
+                    printServiceProviderDetails(serviceProvider);
+                    return processFreeDates(id, date, freeDates, i, object);
                 }
             }
-
-            if (!found) {
-                System.out.println("No match found for ID " + id);
-            }
-
-            // After all updates, clear the file and rewrite the data
-            updateFreeDates(freeDates, object.getAllBookedDates(), object.getAllBudgets());
         } catch (Exception e) {
             System.out.println("Error occurred: " + e.getMessage());
         }
+        return false;
     }
 
+    private static void printServiceProviderDetails(ServiceProviderClass serviceProvider) {
+        System.out.println("\u001B[34mName: " + serviceProvider.getName() + "\u001B[0m"); // Blue color for name
+        System.out.println("ID: " + serviceProvider.getId());
+        System.out.println("Email: " + serviceProvider.getEmail());
+        System.out.print("Services: ");
+        for (String service : serviceProvider.getServicesList()) {
+            System.out.print(service + " ");
+        }
+        System.out.println("\nFree Dates: ");
+    }
 
+    private static boolean processFreeDates(String id, String date, List<List<String>> freeDates, int serviceProviderIndex, SuperSPData object) {
+        if (serviceProviderIndex < freeDates.size()) {
+            List<String> dates = freeDates.get(serviceProviderIndex);
+            return findAndProcessDate(id, date, dates, serviceProviderIndex, object);
+        }
+        return false;
+    }
 
+    private static boolean findAndProcessDate(String id, String date, List<String> dates, int serviceProviderIndex, SuperSPData object) {
+        boolean dateFound = false;
+        for (int j = 0; j < dates.size(); j++) {
+            String d = dates.get(j);
+            if (d.equals(date)) {
+                dateFound = true;
+                processMatchedDate(id, date, dates, j, serviceProviderIndex, object);
+                break;
+            }
+        }
+        if (!dateFound) {
+            System.out.println("Date " + date + " not found for ID " + id);
+        }
+        return dateFound;
+    }
+
+    private static void processMatchedDate(String id, String date, List<String> dates, int dateIndex, int serviceProviderIndex, SuperSPData object) {
+        System.out.println("Match found for date " + dates.get(dateIndex) + " at index " + dateIndex);
+        // Add the deleted date plus 7 days to booked dates
+        object.getAllBookedDates().get(serviceProviderIndex).add(date);
+
+        // Add the deleted date plus 7 days to free dates
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+        LocalDate deletedDate = LocalDate.parse(date, formatter);
+        LocalDate addedDate = deletedDate.plusDays(7);
+        String addedDateStr = addedDate.format(formatter);
+        dates.add(addedDateStr);
+
+        // Remove the matched date from the list
+        dates.remove(dateIndex);
+    }
+
+    
     public static void updateFreeDates(List<List<String>> freeDates, List<List<String>> bookedDates, List<String> allBudgets) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("sp_price_dates.txt"))) {
             for (int i = 0; i < freeDates.size(); i++) {
