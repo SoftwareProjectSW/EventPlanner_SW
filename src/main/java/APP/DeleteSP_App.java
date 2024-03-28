@@ -112,76 +112,56 @@ public class DeleteSP_App {
         return Count;
     }
 
-    public void removeServiceProviderByName(String name){
+   
+public void removeServiceProviderByName(String name) {
+    Integer count = 0;
+    ServiceProviderData sp = new ServiceProviderData();
 
-        Integer Count =0 ;
-        ServiceProviderData sp =new ServiceProviderData();
-
-        for (ServiceProviderClass temp : sp.getServiceProviderList()) {
-            if (name.equals( temp.getName() )) {
-                Count++;
-                setSPExistsTrue();
-            }
-
+    for (ServiceProviderClass temp : sp.getServiceProviderList()) {
+        if (name.equals(temp.getName())) {
+            count++;
+            setSPExistsTrue();
         }
-
-
-        ServiceProviderData SPData = new ServiceProviderData();
-        File serviceProviderFile = new File("DataForSP.txt");
-
-        enterServiceProviderName(name);
-        //long count = serviceProviderList.stream().filter(provider -> provider.getName().equals(name)).count();
-
-        if (Count == 1) {
-            // Remove from ArrayList
-            SPData.getServiceProviderList().removeIf(provider -> provider.getName().equals(name));
-
-            // Remove from file
-            BufferedWriter writer = null;
-            try {
-                File tempFile = new File("temp.txt");
-                writer = new BufferedWriter(new FileWriter(tempFile));
-
-                for (ServiceProviderClass provider : SPData.getServiceProviderList()) {
-                    writer.write(provider.getName() + "," + provider.getId() + "," + provider.getEmail());
-
-                    Integer i = 0;
-                    for (String Services : SPData.getServiceProviderList().get(i).getServicesList()) {
-                        writer.write("," + Services);
-
-                    }
-
-                    writer.newLine();
-                }
-                writer.close();
-                final boolean delete;
-                if (serviceProviderFile.delete()) delete = true;
-                else delete = false;
-                final boolean b;
-                if (tempFile.renameTo(serviceProviderFile)) b = true;
-                else b = false;
-                
-                System.out.println("Service provider with name " + name + " deleted successfully.");
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (writer != null) {
-                    try {
-                        writer.close();
-                    } catch (IOException e) {
-                        System.out.println("Error closing BufferedWriter: " + e.getMessage());
-                    }
-                }
-            }
-        } else if (Count > 1) {
-            System.out.println("Multiple service providers with the same name.");
-        } else {
-            System.out.println("No service provider found with the given name.");
-        }
-
-        enterServiceProviderName(name);
-
     }
+
+    ServiceProviderData SPData = new ServiceProviderData();
+    File serviceProviderFile = new File("DataForSP.txt");
+
+    enterServiceProviderName(name);
+
+    if (count == 1) {
+        // Remove from ArrayList
+        SPData.getServiceProviderList().removeIf(provider -> provider.getName().equals(name));
+
+        // Remove from file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("temp.txt"))) {
+            for (ServiceProviderClass provider : SPData.getServiceProviderList()) {
+                writer.write(provider.getName() + "," + provider.getId() + "," + provider.getEmail());
+
+                Integer i = 0;
+                for (String services : SPData.getServiceProviderList().get(i).getServicesList()) {
+                    writer.write("," + services);
+                }
+
+                writer.newLine();
+            }
+            writer.close();
+            if (serviceProviderFile.delete() && new File("temp.txt").renameTo(serviceProviderFile)) {
+                System.out.println("Service provider with name " + name + " deleted successfully.");
+            } else {
+                System.out.println("Error occurred while deleting the service provider.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    } else if (count > 1) {
+        System.out.println("Multiple service providers with the same name.");
+    } else {
+        System.out.println("No service provider found with the given name.");
+    }
+
+    enterServiceProviderName(name);
+}
 
 
     public void removeServiceProviderById(String Id){
