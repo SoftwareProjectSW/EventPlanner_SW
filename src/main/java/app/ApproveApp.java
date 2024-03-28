@@ -14,25 +14,25 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Properties;
 
-import static APP.EnteredBudget.serviceProviderData;
+import static app.EnteredBudget.serviceProviderData;
 import static DataB.SuperSPData.readSPData;
 import static java.lang.System.out;
 
 public class ApproveApp {
 
 
- public static boolean aListOfPendingEventsAwaitingApproval() {
-     EventData events = new EventData();
-     int pendingEventsCount = 0;
-     for (Event event : events.getEventsList()) {
-         if (event.getStatus() == Event.Status.NOT_SEEN) {
-             out.println(event);
-             pendingEventsCount++;
-         }
-     }
-     out.println("Total number of pending events: " + pendingEventsCount);
-     return true;
- }
+    public static boolean aListOfPendingEventsAwaitingApproval() {
+        EventData events = new EventData();
+        int pendingEventsCount = 0;
+        for (Event event : events.getEventsList()) {
+            if (event.getStatus() == Event.Status.NOT_SEEN) {
+                out.println(event);
+                pendingEventsCount++;
+            }
+        }
+        out.println("Total number of pending events: " + pendingEventsCount);
+        return true;
+    }
     public static boolean aListOfApprovedEvents() {
         EventData events = new EventData();
         int pendingEventsCount = 0;
@@ -152,7 +152,7 @@ public class ApproveApp {
         dates.remove(dateIndex);
     }
 
-    
+
     public static void updateFreeDates(List<List<String>> freeDates, List<List<String>> bookedDates, List<String> allBudgets) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("sp_price_dates.txt"))) {
             for (int i = 0; i < freeDates.size(); i++) {
@@ -278,6 +278,3 @@ public class ApproveApp {
 
 
 }
-
-
-
