@@ -137,16 +137,17 @@ public class DeleteSP_App {
             SPData.getServiceProviderList().removeIf(provider -> provider.getName().equals(name));
 
             // Remove from file
+            BufferedWriter writer = null;
             try {
                 File tempFile = new File("temp.txt");
-                BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+                writer = new BufferedWriter(new FileWriter(tempFile));
 
                 for (ServiceProviderClass provider : SPData.getServiceProviderList()) {
-                    writer.write(provider.getName() + "," + provider.getId() + "," + provider.getEmail() );
+                    writer.write(provider.getName() + "," + provider.getId() + "," + provider.getEmail());
 
-                    Integer i =0;
-                    for (String Services : SPData.getServiceProviderList().get(i).getServicesList()){
-                        writer.write( "," + Services);
+                    Integer i = 0;
+                    for (String Services : SPData.getServiceProviderList().get(i).getServicesList()) {
+                        writer.write("," + Services);
 
                     }
 
@@ -158,6 +159,14 @@ public class DeleteSP_App {
                 System.out.println("Service provider with name " + name + " deleted successfully.");
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                if (writer != null) {
+                    try {
+                        writer.close();
+                    } catch (IOException e) {
+                        System.out.println("Error closing BufferedWriter: " + e.getMessage());
+                    }
+                }
             }
         } else if (Count > 1) {
             System.out.println("Multiple service providers with the same name.");
