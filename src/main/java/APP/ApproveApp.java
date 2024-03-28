@@ -168,8 +168,9 @@ public class ApproveApp {
 
 
     public static void updateFreeDates(List<List<String>> freeDates, List<List<String>> bookedDates, List<String> allBudgets) {
+        BufferedWriter writer = null;
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("sp_price_dates.txt"));
+            writer = new BufferedWriter(new FileWriter("sp_price_dates.txt"));
 
             for (int i = 0; i < freeDates.size(); i++) {
                 // Clear the file before writing
@@ -203,16 +204,15 @@ public class ApproveApp {
             System.out.println("Free dates updated successfully.");
         } catch (IOException e) {
             System.out.println("Error updating free dates: " + e.getMessage());
-        }
-     finally {
-        if (writer != null) {
-            try {
-                writer.close();
-            } catch (IOException e) {
-                System.out.println("Error closing BufferedWriter: " + e.getMessage());
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    System.out.println("Error closing BufferedWriter: " + e.getMessage());
+                }
             }
         }
-    }
     }
 
 
