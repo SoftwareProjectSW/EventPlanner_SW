@@ -204,6 +204,15 @@ public class ApproveApp {
         } catch (IOException e) {
             System.out.println("Error updating free dates: " + e.getMessage());
         }
+     finally {
+        if (writer != null) {
+            try {
+                writer.close();
+            } catch (IOException e) {
+                System.out.println("Error closing BufferedWriter: " + e.getMessage());
+            }
+        }
+    }
     }
 
 
