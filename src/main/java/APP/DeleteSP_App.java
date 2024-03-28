@@ -202,25 +202,35 @@ public class DeleteSP_App {
             SPData.getServiceProviderList().removeIf(provider -> provider.getId().equals(Id));
 
             // Remove from file
+            BufferedWriter writer = null;
             try {
                 File tempFile = new File("temp.txt");
-                BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+                writer = new BufferedWriter(new FileWriter(tempFile));
 
                 for (ServiceProviderClass provider : SPData.getServiceProviderList()) {
-                    writer.write(provider.getName() + "," + provider.getId()+ "," + provider.getEmail());
-                    Integer i =0;
-                    for (String Services : SPData.getServiceProviderList().get(i).getServicesList()){
-                        writer.write( "," + Services);
+                    writer.write(provider.getName() + "," + provider.getId() + "," + provider.getEmail());
+                    Integer i = 0;
+                    for (String Services : SPData.getServiceProviderList().get(i).getServicesList()) {
+                        writer.write("," + Services);
 
                     }
 
-                    writer.newLine();                }
+                    writer.newLine();
+                }
                 writer.close();
                 serviceProviderFile.delete();
                 tempFile.renameTo(serviceProviderFile);
                 System.out.println("Service provider with ID " + Id + " deleted successfully.");
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                if (writer != null) {
+                    try {
+                        writer.close();
+                    } catch (IOException e) {
+                        System.out.println("Error closing BufferedWriter: " + e.getMessage());
+                    }
+                }
             }
         } else {
             System.out.println("No service provider found with the given ID.");
