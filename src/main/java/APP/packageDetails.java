@@ -13,12 +13,12 @@ import java.util.List;
 import static org.example.Event.writeEventToFile;
 
 public class packageDetails {
-
     public boolean theUserIsNotifiedOfTheBudgetInvalid1(int price) throws IOException {
         System.out.println("\u001B[31mThe budget is not valid. Please make sure that you have enough budget,and you can choose one of this packages\u001B[0m");
         printSuitablePackage1(price);
         return true;
     }
+
     public List<Integer> printSuitablePackage1(int budgetNumber) throws IOException {
         List<Integer> serialNumbers = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("packageFile.txt"))) {
@@ -63,12 +63,13 @@ public class packageDetails {
                     serialNumbers.add(serialNumber - 1);
                 }
                 // Skip the package separator
-                br.readLine();
+                String separator = br.readLine();
             }
         }
         return serialNumbers;
     }
-    public boolean theSystemShouldDisplayTheFullInformationAboutThePackage(int targetSerialNumber, int budgetNumber,String em) throws IOException {
+
+    public boolean theSystemShouldDisplayTheFullInformationAboutThePackage(int targetSerialNumber, int budgetNumber, String em) throws IOException {
         List<Integer> serialNumbers = printSuitablePackage1(budgetNumber);
         if (serialNumbers.contains(targetSerialNumber)) {
             try (BufferedReader br = new BufferedReader(new FileReader("packageFile.txt"))) {
@@ -94,15 +95,14 @@ public class packageDetails {
                     String id = providerData[1];
                     String email = providerData[2];
                     ServiceProviderClass serviceProvider = new ServiceProviderClass(name, id, email);
-
                     List<String> services = new ArrayList<>();
                     for (int i = 3; i < providerData.length; i++) {
                         services.add(providerData[i]);
                     }
                     serviceProvider.setServicesListPackage((ArrayList<String>) services);
-
                     String date = br.readLine();
                     String venue = br.readLine();
+                    String separator = br.readLine(); // Store the value returned by readLine()
                     if (venue == null) {
                         break;
                     }
@@ -123,15 +123,12 @@ public class packageDetails {
                         System.out.println("\u001B[33mDate: " + date + "\u001B[0m");
                         System.out.println("\u001B[33mVenue choosed: " + venue + "\u001B[0m");
                         System.out.println();
-
                         String venName = VenueClass.extractName(venue);
-                        Event event=new Event(em,name,id,email,serviceProvider.getServicesListPackage(),venName,date,budget);
+                        Event event = new Event(em, name, id, email, serviceProvider.getServicesListPackage(), venName, date, budget);
                         writeEventToFile(event);
-
                         return true;
                     }
                     serialNumber++;
-                    br.readLine();
                 }
             }
         } else {
@@ -140,6 +137,4 @@ public class packageDetails {
         }
         return false;
     }
-
-
 }
