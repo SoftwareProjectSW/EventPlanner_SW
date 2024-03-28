@@ -171,50 +171,52 @@ public class DeleteSP_App {
 
 
 
-    public void removeServiceProviderById(String Id) {
+   public void removeServiceProviderById(String id) {
+    ServiceProviderData sp = new ServiceProviderData();
+    List<ServiceProviderClass> serviceProviderList = sp.getServiceProviderList();
+    boolean serviceProviderFound = false;
 
-        boolean flag = false;
-        setremoveByIdFlagFalse();
-        ServiceProviderData sp = new ServiceProviderData();
-
-        for (ServiceProviderClass temp : sp.getServiceProviderList()) {
-            if (Id.equals(temp.getId())) {
-                flag = true;
-                setremoveByIdFlagTrue();
-            }
-        }
-
-        ServiceProviderData SPData = new ServiceProviderData();
-        File serviceProviderFile = new File("DataForSP.txt");
-
-        if (flag) {
-            // Remove from ArrayList
-            SPData.getServiceProviderList().removeIf(provider -> provider.getId().equals(Id));
-
-            // Remove from file
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(TEMP_FILE_NAME))) {
-                for (ServiceProviderClass provider : SPData.getServiceProviderList()) {
-                    writer.write(provider.getName() + "," + provider.getId() + "," + provider.getEmail());
-                    Integer i = 0;
-                    for (String Services : SPData.getServiceProviderList().get(i).getServicesList()) {
-                        writer.write("," + Services);
-                    }
-
-                    writer.newLine();
-                }
-                writer.close();
-                if (serviceProviderFile.delete() && new File(TEMP_FILE_NAME).renameTo(serviceProviderFile)) {
-                    System.out.println("Service provider with ID " + Id + " deleted successfully.");
-                } else {
-                    System.out.println("Error occurred while deleting the service provider.");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("No service provider found with the given ID.");
+    // Check if the service provider with the given ID exists
+    for (ServiceProviderClass serviceProvider : serviceProviderList) {
+        if (id.equals(serviceProvider.getId())) {
+            serviceProviderFound = true;
+            serviceProviderList.remove(serviceProvider); // Remove from ArrayList
+            break;
         }
     }
+
+    if (serviceProviderFound) {
+        // Write the updated service providers list to the file
+        writeServiceProviderListToFile(serviceProviderList);
+        System.out.println("Service provider with ID " + id + " deleted successfully.");
+    } else {
+        System.out.println("No service provider found with the given ID.");
+    }
+}
+
+private void writeServiceProviderListToFile(List<ServiceProviderClass> serviceProviderList) {
+    File serviceProviderFile = new File("DataForSP.txt");
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(TEMP_FILE_NAME))) {
+        for (ServiceProviderClass provider : serviceProviderList) {
+            writer.write(provider.getName() + "," + provider.getId() + "," + provider.getEmail());
+            for (String service : provider.getServicesList()) {
+                writer.write("," + service);
+            }
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    // Rename the temporary file to the original file name
+    File tempFile = new File(TEMP_FILE_NAME);
+    if (tempFile.renameTo(serviceProviderFile)) {
+        System.out.println("File updated successfully.");
+    } else {
+        System.out.println("Error occurred while updating the file.");
+    }
+}
+
 
 
     public boolean checkExistence(String name){
