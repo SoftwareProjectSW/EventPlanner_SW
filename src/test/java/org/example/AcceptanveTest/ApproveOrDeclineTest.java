@@ -5,7 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.example.Main.changeEventStatus;
+import static org.example.Main.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ApproveOrDeclineTest {
