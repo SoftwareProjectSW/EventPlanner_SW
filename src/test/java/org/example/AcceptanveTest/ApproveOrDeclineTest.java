@@ -15,16 +15,19 @@ public class ApproveOrDeclineTest {
     ApproveApp app=new ApproveApp();
     @Given("a list of pending events awaiting approval")
     public void aListOfPendingEventsAwaitingApproval() {
-        assertTrue(app.aListOfPendingEventsAwaitingApproval());
+        assertTrue(ApproveApp.aListOfPendingEventsAwaitingApproval());
     }
     @When("the organizer accesses the event management system")
     public void theOrganizerAccessesTheEventManagementSystem() {
+        String y= String.valueOf(20);
+        assertFalse(Main.selectsAnEventToReview(y));
 
     }
     @When("selects an event to review")
     public void selectsAnEventToReview() {
         String i= String.valueOf(4);
-        assertTrue(app.selectsAnEventToReview(i));
+        assertTrue(Main.selectsAnEventToReview(i));
+
     }
     @When("approves the event")
     public void approvesTheEvent() {

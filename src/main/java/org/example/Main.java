@@ -56,6 +56,17 @@ public class Main {
         logger.info("| 3- If you want to login as an organizer               \n");
         logger.info("|___________________________________________________|\n");
     }
+    public static boolean selectsAnEventToReview(String i) {
+        EventData events = new EventData();
+        for (Event event : events.getEventsList()) {
+            if (event.getSP().getId().equals(i) ) { // Check if the ID matches
+                logger.info(event.serialize() + "\n");
+                return true; // Exit the loop after printing the event
+            }
+        }
+        logger.info("Ent with ID " + i + " not found." + "\n");
+        return false;
+    }
 
     public static boolean aListOfApprovedEvents() {
         EventData events = new EventData();

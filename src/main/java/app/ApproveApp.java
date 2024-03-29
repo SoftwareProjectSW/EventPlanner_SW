@@ -36,17 +36,7 @@ public class ApproveApp {
 
 
 
-    public static boolean selectsAnEventToReview(String i) {
-        EventData events = new EventData();
-        for (Event event : events.getEventsList()) {
-            if (event.getSP().getId().equals(i) ) { // Check if the ID matches
-                logger.info(event.serialize() + "\n");
-                return true; // Exit the loop after printing the event
-            }
-        }
-        logger.info("Event with ID " + i + " not found." + "\n");
-        return false;
-    }
+ 
 
 
 
