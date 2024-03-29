@@ -13,12 +13,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import static app.EnteredBudget.serviceProviderData;
 import static DataB.SuperSPData.readSPData;
-import static java.lang.System.out;
 
 public class ApproveApp {
+    private static final Logger logger = LoggerUtility.getLogger();
 
 
     public static boolean aListOfPendingEventsAwaitingApproval() {
@@ -26,11 +27,11 @@ public class ApproveApp {
         int pendingEventsCount = 0;
         for (Event event : events.getEventsList()) {
             if (event.getStatus() == Event.Status.NOT_SEEN) {
-                out.println(event);
+                logger.info(event.toString() + "\n");
                 pendingEventsCount++;
             }
         }
-        out.println("Total number of pending events: " + pendingEventsCount);
+        logger.info("Total number of pending events: " + pendingEventsCount + "\n");
         return true;
     }
     public static boolean aListOfApprovedEvents() {
@@ -38,11 +39,11 @@ public class ApproveApp {
         int pendingEventsCount = 0;
         for (Event event : events.getEventsList()) {
             if (event.getStatus() == Event.Status.APPROVED) {
-                out.println(event);
+                logger.info(event.toString() + "\n");
                 pendingEventsCount++;
             }
         }
-        out.println("Total number of Upcoming events: " + pendingEventsCount);
+        logger.info("Total number of Upcoming events: " + pendingEventsCount + "\n");
         return true;
     }
 
@@ -51,12 +52,12 @@ public class ApproveApp {
         EventData events = new EventData();
         for (Event event : events.getEventsList()) {
             if (event.getSP().getId().equals(i) ) { // Check if the ID matches
-                out.println(event.serialize());
+                logger.info(event.serialize() + "\n");
                 return true; // Exit the loop after printing the event
             }
         }
-        out.println("Event with ID " + i + " not found.");
-        return false; // Return false since the event was not found
+        logger.info("Event with ID " + i + " not found." + "\n");
+        return false;
     }
 
 
@@ -71,7 +72,7 @@ public class ApproveApp {
         boolean found = findServiceProviderAndPrintDetails(id, date, freeDates, serviceProviderList, object);
 
         if (!found) {
-            System.out.println("No match found for ID " + id);
+            logger.info("No match found for ID " + id + "\n");
         }
 
         updateFreeDates(freeDates, object.getAllBookedDates(), object.getAllBudgets());
@@ -87,20 +88,20 @@ public class ApproveApp {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Error occurred: " + e.getMessage());
+            logger.severe("Error occurred: " + e.getMessage() + "\n");
         }
         return false;
     }
 
     private static void printServiceProviderDetails(ServiceProviderClass serviceProvider) {
-        System.out.println("\u001B[34mName: " + serviceProvider.getName() + "\u001B[0m"); // Blue color for name
-        System.out.println("ID: " + serviceProvider.getId());
-        System.out.println("Email: " + serviceProvider.getEmail());
-        System.out.print("Services: ");
+        logger.info("\u001B[34mName: " + serviceProvider.getName() + "\u001B[0m" + "\n"); // Blue color for name
+        logger.info("ID: " + serviceProvider.getId() + "\n");
+        logger.info("Email: " + serviceProvider.getEmail() + "\n");
+        logger.info("Services: " + "\n");
         for (String service : serviceProvider.getServicesList()) {
-            System.out.print(service + " ");
+            logger.info(service + " " + "\n");
         }
-        System.out.println("\nFree Dates: ");
+        logger.info("\nFree Dates: " + "\n");
     }
 
     private static boolean processFreeDates(String id, String date, List<List<String>> freeDates, int serviceProviderIndex, SuperSPData object) {
@@ -122,24 +123,22 @@ public class ApproveApp {
             }
         }
         if (!dateFound) {
-            System.out.println("Date " + date + " not found for ID " + id);
+            logger.info("Date " + date + " not found for ID " + id + "\n");
         }
         return dateFound;
     }
 
     private static void processMatchedDate(String id, String date, List<String> dates, int dateIndex, int serviceProviderIndex, SuperSPData object) {
-        System.out.println("Match found for date " + dates.get(dateIndex) + " at index " + dateIndex);
+        logger.info("Match found for date " + dates.get(dateIndex) + " at index " + dateIndex + "\n");
         // Add the deleted date plus 7 days to booked dates
         object.getAllBookedDates().get(serviceProviderIndex).add(date);
 
-        // Add the deleted date plus 7 days to free dates
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
         LocalDate deletedDate = LocalDate.parse(date, formatter);
         LocalDate addedDate = deletedDate.plusDays(7);
         String addedDateStr = addedDate.format(formatter);
         dates.add(addedDateStr);
 
-        // Remove the matched date from the list
         dates.remove(dateIndex);
     }
 
@@ -147,10 +146,7 @@ public class ApproveApp {
     public static void updateFreeDates(List<List<String>> freeDates, List<List<String>> bookedDates, List<String> allBudgets) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("sp_price_dates.txt"))) {
             for (int i = 0; i < freeDates.size(); i++) {
-                writer.write("");
-
-                writer.write(allBudgets.get(i));
-                writer.newLine();
+                writer.write(allBudgets.get(i) + "\n");
 
                 List<String> dates = freeDates.get(i);
                 for (String date : dates) {
@@ -166,15 +162,15 @@ public class ApproveApp {
                     writer.newLine();
                 }
 
-                writer.write("***");
-                writer.newLine();
+                writer.write("***" + "\n");
             }
 
-            System.out.println("Free dates updated successfully.");
+            logger.info("Free dates updated successfully." + "\n");
         } catch (IOException e) {
-            System.out.println("Error updating free dates: " + e.getMessage());
+            logger.severe("Error updating free dates: " + e.getMessage() + "\n");
         }
     }
+
 
     public static boolean changeEventStatus(String eventId, String statusChange, String date) {
         // Load events from file into a list
@@ -191,7 +187,7 @@ public class ApproveApp {
         if (eventToRemove != null) {
             events.getEventsList().remove(eventToRemove);
         } else {
-            System.out.println("Event with ID " + eventId + " and date " + date + " not found.");
+            logger.warning("Event with ID " + eventId + " and date " + date + " not found." + "\n");
             return false;
         }
 
@@ -215,24 +211,22 @@ public class ApproveApp {
                 break;
             }
             default:
-                System.out.println("Invalid status change. Please enter 'Approved' or 'Declined'.");
+                logger.warning("Invalid status change. Please enter 'Approved' or 'Declined'." + "\n");
                 return false;
         }
 
-        // Add the modified event back to the list
         events.getEventsList().add(eventToRemove);
 
-        // Write the updated events list back to the file
         try (FileWriter fw = new FileWriter("DataForEvents.txt");
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
             for (Event event : events.getEventsList()) {
                 out.println(event.serialize());
             }
-            System.out.println("\u001B[32mEvent information updated successfully.\u001B[0m");
+            logger.info("\u001B[32mEvent information updated successfully.\u001B[0m" + "\n");
             return true;
         } catch (IOException e) {
-            System.err.println("Error updating event information: " + e.getMessage());
+            logger.severe("Error updating event information: " + e.getMessage() + "\n");
         }
         return false;
     }
@@ -261,9 +255,9 @@ public class ApproveApp {
             message.setText(messageContent);
             Transport.send(message);
 
-            System.out.println("Email sent successfully to " + recipientEmail);
+            logger.info("Email sent successfully to " + recipientEmail + "\n");
         } catch (MessagingException e) {
-            System.out.println("Error occurred while sending email: " + e.getMessage());
+            logger.severe("Error occurred while sending email: " + e.getMessage() + "\n");
         }
     }
 
