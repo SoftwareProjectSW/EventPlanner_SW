@@ -41,4 +41,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn -B jacoco:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:report -Dsonar.projectKey=SoftwareProjectSW_EventPlanner_SW -Dsonar.exclusions=**/Main.java,**/DeleteSP_App.java,**/DeleteSpTest.java,**/org/example/EmailConfig.java,**/app/ApproveApp.java
+          mvn -B jacoco:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:report -Dsonar.projectKey=SoftwareProjectSW_EventPlanner_SW -Dsonar.exclusions=**/Main.java,**/DeleteSP_App.java,**/DeleteSpTest.java,**/org/example/EmailConfig.java
