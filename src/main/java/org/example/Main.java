@@ -1,10 +1,14 @@
 package org.example;
 
-import APP.*;
+import app.*;
 import DataB.*;
+import io.cucumber.java.bs.A;
 
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -53,8 +57,81 @@ public class Main {
         logger.info("|___________________________________________________|\n");
     }
 
+    public static boolean aListOfApprovedEvents() {
+        EventData events = new EventData();
+        int pendingEventsCount = 0;
+        for (Event event : events.getEventsList()) {
+            if (event.getStatus() == Event.Status.APPROVED) {
+                logger.info(event.toString() + "\n");
+                pendingEventsCount++;
+            }
+        }
+        logger.info("Total number of Upcoming events: " + pendingEventsCount + "\n");
+        return true;
+    }
+    public static boolean changeEventStatus(String eventId, String statusChange, String date) {
+        ApproveApp app=new ApproveApp();
+        // Load events from file into a list
+        EventData events = new EventData();
+
+        // Find and remove the event with the specified ID and date
+        Event eventToRemove = null;
+        for (Event event : events.getEventsList()) {
+            if (event.getSP().getId().equals(eventId) && event.getDate().equals(date)) {
+                eventToRemove = event;
+                break;
+            }
+        }
+        if (eventToRemove != null) {
+            events.getEventsList().remove(eventToRemove);
+        } else {
+            logger.warning("Event with ID " + eventId + " and date " + date + " not found." + "\n");
+            return false;
+        }
+
+        // Modify the status of the removed event
+        if (statusChange.toUpperCase().equals("APPROVED")) {
+
+            eventToRemove.setStatus(Event.Status.APPROVED);
+            ApproveApp.matchIdWithDates(eventId,date);
+            String recipientEmail = "s12113094@stu.najah.edu";
+            String subject = "You have a new event!";
+            String messageContent = "You have a new event for the provider with ID: " + eventId;
+            ApproveApp.sendEmail(recipientEmail, subject, messageContent);
+        }
+        else if(statusChange.toUpperCase().equals("DECLINED")){
+            eventToRemove.setStatus(Event.Status.DECLINED);
+            ApproveApp.matchIdWithDates(eventId,date);
+            String recipientEmail = "s12113094@stu.najah.edu";
+            String subject = "Event Declined";
+            String messageContent = "Your event with the provider with ID: " + eventId + " has been declined.";
+            ApproveApp.sendEmail(recipientEmail, subject, messageContent);
+
+        }
+        else{
+            logger.warning("Invalid status change. Please enter 'Approved' or 'Declined'." + "\n");
+            return false;
+        }
+
+        events.getEventsList().add(eventToRemove);
+
+        try (FileWriter fw = new FileWriter("DataForEvents.txt");
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter out = new PrintWriter(bw)) {
+            for (Event event : events.getEventsList()) {
+                out.println(event.serialize());
+            }
+            logger.info("\u001B[32mEvent information updated successfully.\u001B[0m" + "\n");
+            return true;
+        } catch (IOException e) {
+            logger.severe("Error updating event information: " + e.getMessage() + "\n");
+        }
+        return false;
+    }
+
 
     public static void main(String[] args) throws IOException {
+
       //  readSPData("sp_price_dates.txt");
         int option = 0;
         String password = null;
@@ -71,7 +148,6 @@ public class Main {
                     menu();
                     option = in.nextInt();
                 }
-                option = in.nextInt();
 
             } catch (InputMismatchException e) {
                 displayupline();
@@ -236,7 +312,7 @@ public class Main {
                         int optionadmin = in.nextInt();
                         if (optionadmin == 1) {
 ApproveApp app=new ApproveApp();
-app.aListOfPendingEventsAwaitingApproval();
+ApproveApp.aListOfPendingEventsAwaitingApproval();
 Scanner i=new Scanner(System.in);
 System.out.println("\u001B[33mplease enter the id of SP that have events to review :\u001B[0m ");
 String id=i.nextLine();
@@ -244,7 +320,7 @@ System.out.println("\u001B[33mplease enter the date of the evente also:\u001B[0m
 String dat=i.nextLine();
 System.out.println("\u001B[33mplease write the new statue approved/decline:\u001B[0m");
 String status=i.nextLine();
-app.changeEventStatus(id,status,dat);
+changeEventStatus(id,status,dat);
 
 
                         }
@@ -264,8 +340,8 @@ app.changeEventStatus(id,status,dat);
                             op.isAddedVenue(name,capacity,price);
                             displayOrgMenu=true;
                         } else if (optionadmin == 3) {
-                                ApproveApp app=new ApproveApp();
-                                app.aListOfApprovedEvents();
+                           //     ApproveApp app=new ApproveApp();
+                                aListOfApprovedEvents();
                                 displayOrgMenu=true;
 
                         } else if (optionadmin == 4) {
