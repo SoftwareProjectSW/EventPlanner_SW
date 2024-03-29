@@ -180,7 +180,6 @@ public class ApproveApp {
         }
 
         // Modify the status of the removed event
-        if(statusChange.toUpperCase().equals("APPROVED"))
         switch (statusChange.toUpperCase()) {
             case "APPROVED":{
                 eventToRemove.setStatus(Event.Status.APPROVED);
