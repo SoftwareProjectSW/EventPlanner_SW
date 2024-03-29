@@ -36,14 +36,14 @@ public class ApproveApp {
     }
     public static boolean aListOfApprovedEvents() {
         EventData events = new EventData();
-        int approved = 0;
+        int pendingEventsCount = 0;
         for (Event event : events.getEventsList()) {
             if (event.getStatus() == Event.Status.APPROVED) {
-                logger.info(event + "\n");
-                approved++;
+                logger.info(event.toString() + "\n");
+                pendingEventsCount++;
             }
         }
-        logger.info("Total number of Upcoming events: " + approved + "\n");
+        logger.info("Total number of Upcoming events: " + pendingEventsCount + "\n");
         return true;
     }
 
