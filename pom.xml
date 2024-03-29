@@ -8,8 +8,8 @@
     <artifactId>EventPlanner_Software</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-             <sonar.organization>softwareprojectsw</sonar.organization>
-  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.organization>softwareprojectsw</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.8.2</junit.version>
@@ -77,8 +77,13 @@
             <version>7.3.4</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.11</version>
+        </dependency>
     </dependencies>
-           <build>
+    <build>
         <plugins>
             <!-- Other plugins -->
 
@@ -86,7 +91,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version>
+                <version>0.8.11</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
