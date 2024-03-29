@@ -1,7 +1,7 @@
 package org.example.AcceptanveTest;
 
 
-import APP.LoginOrgApp;
+import app.LoginOrgApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 

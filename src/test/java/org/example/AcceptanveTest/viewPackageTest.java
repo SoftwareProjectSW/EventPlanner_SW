@@ -1,5 +1,5 @@
 package org.example.AcceptanveTest;
-import APP.packageDetails;
+import app.packageDetails;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

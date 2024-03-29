@@ -1,7 +1,7 @@
 package org.example.AcceptanveTest;
 
-import APP.AddSP_App;
-import APP.DeleteSP_App;
+import app.AddSP_App;
+import app.DeleteSP_App;
 import io.cucumber.java.en.*;
 import static org.junit.Assert.*;
 

@@ -1,6 +1,6 @@
 package org.example.AcceptanveTest;
-import APP.LogInAsAdmin;
-import APP.viewInfoSP;
+import app.LogInAsAdmin;
+import app.viewInfoSP;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

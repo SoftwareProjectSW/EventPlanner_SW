@@ -1,9 +1,9 @@
 package org.example.AcceptanveTest;
-import APP.LogInAsAdmin;
+import app.LogInAsAdmin;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.example.UserClass;
-import APP.LogInAsUser;
+import app.LogInAsUser;
 import org.junit.Ignore;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,8 +1,8 @@
 package org.example.AcceptanveTest;
 
-import APP.AddSP_App;
-import APP.DeleteSP_App;
-import APP.EnteredBudget;
+import app.AddSP_App;
+import app.DeleteSP_App;
+import app.EnteredBudget;
 import io.cucumber.java.en.*;
 
 import java.io.IOException;

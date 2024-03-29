@@ -1,6 +1,6 @@
 package org.example.AcceptanveTest;
 
-import APP.ReserveVenueApp;
+import app.ReserveVenueApp;
 import io.cucumber.java.en.*;
 
 import static org.junit.Assert.assertFalse;
