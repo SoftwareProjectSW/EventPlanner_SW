@@ -16,14 +16,25 @@ public class EmailConfig {
             fis.close();
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Error loading config.properties file: " + e.getMessage());
         }
     }
 
     public static String getSenderEmail() {
-        return properties.getProperty("senderEmail");
+        String senderEmail = properties.getProperty("senderEmail");
+        if (senderEmail == null) {
+            System.err.println("senderEmail property is not set in config.properties");
+        }
+        return senderEmail;
     }
 
     public static String getPassword() {
-        return properties.getProperty("password");
+        String password = properties.getProperty("password");
+        if (password == null) {
+            System.err.println("password property is not set in config.properties");
+        }
+        return password;
     }
+ 
+
 }
