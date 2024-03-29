@@ -2,9 +2,9 @@ package app;
 
 import DataB.EventData;
 import DataB.SuperSPData;
+import org.example.EmailConfig;
 import org.example.Event;
 import org.example.ServiceProviderClass;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -14,7 +14,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
-
 import static app.EnteredBudget.serviceProviderData;
 import static DataB.SuperSPData.readSPData;
 
@@ -159,12 +158,12 @@ public class ApproveApp {
         }
     }
 
-    
+
 
 
     public static void sendEmail(String recipientEmail, String subject, String messageContent) {
-        String senderEmail = "raghadmoh.tha@gmail.com";
-        String password = "ydfa jwou trps uxqw";
+        String senderEmail = EmailConfig.getSenderEmail();
+        String password = EmailConfig.getPassword();
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
