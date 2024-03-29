@@ -11,7 +11,7 @@ public class EmailConfig {
         properties = new Properties();
         try {
             // Load properties from the config.properties file
-            FileInputStream fis = new FileInputStream("src/main/resources/config.properties");
+            FileInputStream fis = new FileInputStream("config.properties.yml");
             properties.load(fis);
             fis.close();
         } catch (IOException e) {
