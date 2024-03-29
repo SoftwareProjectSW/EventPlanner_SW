@@ -1,9 +1,11 @@
 package org.example.AcceptanveTest;
 
 import app.ApproveApp;
+import io.cucumber.java.an.E;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.example.EmailConfig;
 import org.example.Main;
 
 import static org.example.Main.*;
@@ -40,6 +42,8 @@ public class ApproveOrDeclineTest {
     }
     @Then("a notification should be sent to the customer and provider confirming event approval")
     public void aNotificationShouldBeSentToTheCustomerAndProviderConfirmingEventApproval() {
+        String email= EmailConfig.getSenderEmail();
+        String pass= EmailConfig.getPassword();
 
     }
     @When("declines the event")
