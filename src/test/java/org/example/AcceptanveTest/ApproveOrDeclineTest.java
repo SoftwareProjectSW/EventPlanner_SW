@@ -46,7 +46,7 @@ assertTrue(app.changeEventStatus(id,status,date));
     public void declinesTheEvent() {
         String id="4";
         String status="Declined";
-        String date="7/4/2024";
+        String date="8/4/2024";
         assertFalse(app.changeEventStatus(id,status,date));
     }
     @Then("a notification should be sent to the customer informing them of the event's rejection")
