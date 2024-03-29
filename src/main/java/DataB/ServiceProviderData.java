@@ -1,5 +1,6 @@
 package DataB;
 
+import app.LoggerUtility;
 import org.example.AdminClass;
 import org.example.ServiceProviderClass;
 
@@ -12,6 +13,8 @@ import java.util.logging.Level;
 
 
 public class ServiceProviderData {
+    private static final Logger logger = LoggerUtility.getLogger();
+
     private  ArrayList<ServiceProviderClass> ServiceProviderList = new ArrayList<>();
     private  String SPFile="DataForSP.txt";
 
@@ -67,7 +70,7 @@ public class ServiceProviderData {
             System.out.println(temp.getName());
         }
     }
-    }
+}
 
 
 

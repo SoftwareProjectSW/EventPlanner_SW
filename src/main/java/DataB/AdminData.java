@@ -1,5 +1,6 @@
 package DataB;
 
+import app.LoggerUtility;
 import org.example.AdminClass;
 
 import java.io.BufferedReader;
@@ -12,6 +13,8 @@ import java.util.logging.Level;
 
 
 public class AdminData {
+    private static final Logger logger = LoggerUtility.getLogger();
+
     private static List<AdminClass> adminList;
 
     public AdminData() {

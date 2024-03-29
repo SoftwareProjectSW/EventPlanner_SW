@@ -1,5 +1,7 @@
 package DataB;
 
+import app.LoggerUtility;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class SuperSPData {
+    private static final Logger logger = LoggerUtility.getLogger();
 
     public   String SPFile="sp_price_dates.txt";
 
@@ -32,10 +35,10 @@ public class SuperSPData {
         return Integer.parseInt(budget.replace("$", ""));
     }
     public static void main(String[] args) throws IOException {
-      //  SuperSPData s=new SuperSPData();
-      //  readSPData(s.SPFile);
-      //  int minValue = findMinValue(s.getAllBudgets());
-      //  System.out.println("Minimum value: " + minValue);
+        //  SuperSPData s=new SuperSPData();
+        //  readSPData(s.SPFile);
+        //  int minValue = findMinValue(s.getAllBudgets());
+        //  System.out.println("Minimum value: " + minValue);
 
 
     }
@@ -97,45 +100,45 @@ public class SuperSPData {
         }
         return dates;
     }
-  /*  public void updateFreeDates(List<List<String>> freeDates) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("sp_price_dates.txt"));
-SuperSPData object=new SuperSPData();
-            // Loop through all budget, free dates, and booked dates
-            List<String> allBudgets = object.getAllBudgets();
-            List<List<String>> allFreeDates = object.getAllFreeDates();
-            List<List<String>> allBookedDates = object.getAllBookedDates();
-
-            // Rewrite the file with the updated free dates
-            for (int i = 0; i < allBudgets.size(); i++) {
-                String budget = allBudgets.get(i);
-                writer.write(budget);
-                writer.newLine();
-
-                List<String> dates = allFreeDates.get(i);
-                for (String date : dates) {
-                    writer.write(date + " ");
-                }
-                writer.newLine();
-
-                writer.write("***");
-                writer.newLine();
-            }
-
-            // Write booked dates
-            for (List<String> bookedDates : allBookedDates) {
-                for (String date : bookedDates) {
-                    writer.write(date + " ");
-                }
-                writer.newLine();
-            }
-
-            writer.close();
-            System.out.println("Free dates updated successfully.");
-        } catch (IOException e) {
-            System.out.println("Error updating free dates: " + e.getMessage());
-        }
-    }*/
+    /*  public void updateFreeDates(List<List<String>> freeDates) {
+          try {
+              BufferedWriter writer = new BufferedWriter(new FileWriter("sp_price_dates.txt"));
+  SuperSPData object=new SuperSPData();
+              // Loop through all budget, free dates, and booked dates
+              List<String> allBudgets = object.getAllBudgets();
+              List<List<String>> allFreeDates = object.getAllFreeDates();
+              List<List<String>> allBookedDates = object.getAllBookedDates();
+  
+              // Rewrite the file with the updated free dates
+              for (int i = 0; i < allBudgets.size(); i++) {
+                  String budget = allBudgets.get(i);
+                  writer.write(budget);
+                  writer.newLine();
+  
+                  List<String> dates = allFreeDates.get(i);
+                  for (String date : dates) {
+                      writer.write(date + " ");
+                  }
+                  writer.newLine();
+  
+                  writer.write("***");
+                  writer.newLine();
+              }
+  
+              // Write booked dates
+              for (List<String> bookedDates : allBookedDates) {
+                  for (String date : bookedDates) {
+                      writer.write(date + " ");
+                  }
+                  writer.newLine();
+              }
+  
+              writer.close();
+              System.out.println("Free dates updated successfully.");
+          } catch (IOException e) {
+              System.out.println("Error updating free dates: " + e.getMessage());
+          }
+      }*/
     public List<String> getAllBudgets() {
         return allBudgets;
     }

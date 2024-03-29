@@ -1,5 +1,6 @@
 package DataB;
 
+import app.LoggerUtility;
 import org.example.Event;
 import org.example.ServiceProviderClass;
 
@@ -14,6 +15,7 @@ import java.util.logging.Level;
 
 
 public class EventData {
+    private static final Logger logger = LoggerUtility.getLogger();
 
     public void setEventsList(ArrayList<Event> eventsList) {
         this.eventsList = eventsList;
@@ -39,7 +41,7 @@ public class EventData {
             System.out.println(event);
         }
 
-     //   System.out.println(events.eventsList.size());
+        //   System.out.println(events.eventsList.size());
     }
 
     public static ArrayList<Event> readEventsFromFile() {
@@ -55,9 +57,9 @@ public class EventData {
                 if (line.equals("***")) {
                     if (eventString.length() > 0) {
                         Event event = createEventFromString(eventString.toString());
-                   
-                            events.add(event);
-                        
+
+                        events.add(event);
+
                     }
                     eventString = new StringBuilder();
                 } else {
@@ -65,7 +67,7 @@ public class EventData {
                 }
             }
 
-        
+
         } catch (IOException e) {
             logger.log(Level.SEVERE, "there is error ", e);
         }

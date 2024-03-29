@@ -1,5 +1,6 @@
 package DataB;
 
+import app.LoggerUtility;
 import org.example.AdminClass;
 import org.example.UserClass;
 
@@ -13,6 +14,8 @@ import java.util.logging.Level;
 
 
 public class UserData {
+    private static final Logger logger = LoggerUtility.getLogger();
+
     private static List<UserClass> UserList;
 
     public UserData() {

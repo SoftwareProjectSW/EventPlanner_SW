@@ -1,5 +1,7 @@
 package org.example;
 
+import app.LoggerUtility;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -7,6 +9,8 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class EmailConfig {
+    private static final Logger logger = LoggerUtility.getLogger();
+
     private static Properties properties;
 
     static {
@@ -36,6 +40,6 @@ public class EmailConfig {
         }
         return password;
     }
- 
+
 
 }

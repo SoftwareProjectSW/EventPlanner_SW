@@ -16,6 +16,8 @@ import static org.example.ColoredOutput.ANSI_BLUE;
 
 
 public class ReserveVenueApp {
+    private static final Logger logger = LoggerUtility.getLogger();
+
     public double getSelectedVenuePrice(Double budget , Integer size,Integer a){
 
         Integer i = a-1;
