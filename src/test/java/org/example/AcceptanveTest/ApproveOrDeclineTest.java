@@ -1,7 +1,6 @@
 package org.example.AcceptanveTest;
 
 import app.ApproveApp;
-import io.cucumber.java.bs.A;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -44,8 +43,8 @@ assertTrue(app.changeEventStatus(id,status,date));
     @When("declines the event")
     public void declinesTheEvent() {
         String id="4";
-        String status="Decline";
-        String date="8/4/2024";
+        String status="Declined";
+        String date="7/4/2024";
         assertFalse(app.changeEventStatus(id,status,date));
     }
     @Then("a notification should be sent to the customer informing them of the event's rejection")
