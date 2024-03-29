@@ -34,7 +34,7 @@ public class ApproveApp {
         logger.info("Total number of pending events: " + pendingEventsCount + "\n");
         return true;
     }
-   
+
 
 
     public static boolean selectsAnEventToReview(String i) {
@@ -49,8 +49,12 @@ public class ApproveApp {
         return false;
     }
 
+    public static void main(String[] args) {//print events in file
+        String id = "4";
+        String date = "8/4/2024";
+        matchIdWithDates(id, date);
+    }
 
-    
     public static void matchIdWithDates(String id, String date) {
         readSPData("sp_price_dates.txt");
         SuperSPData object = new SuperSPData();
@@ -160,65 +164,7 @@ public class ApproveApp {
     }
 
 
-    public static boolean changeEventStatus(String eventId, String statusChange, String date) {
-        // Load events from file into a list
-        EventData events = new EventData();
-
-        // Find and remove the event with the specified ID and date
-        Event eventToRemove = null;
-        for (Event event : events.getEventsList()) {
-            if (event.getSP().getId().equals(eventId) && event.getDate().equals(date)) {
-                eventToRemove = event;
-                break;
-            }
-        }
-        if (eventToRemove != null) {
-            events.getEventsList().remove(eventToRemove);
-        } else {
-            logger.warning("Event with ID " + eventId + " and date " + date + " not found." + "\n");
-            return false;
-        }
-
-        // Modify the status of the removed event
-        switch (statusChange.toUpperCase()) {
-            case "APPROVED":{
-                eventToRemove.setStatus(Event.Status.APPROVED);
-                matchIdWithDates(eventId,date);
-                String recipientEmail = "s12113094@stu.najah.edu";
-                String subject = "You have a new event!";
-                String messageContent = "You have a new event for the provider with ID: " + eventId;
-                sendEmail(recipientEmail, subject, messageContent);
-                break;
-            }
-            case "DECLINED":{
-                eventToRemove.setStatus(Event.Status.DECLINED);
-                String recipientEmail = "s12113094@stu.najah.edu";
-                String subject = "Event Declined";
-                String messageContent = "Your event with the provider with ID: " + eventId + " has been declined.";
-                sendEmail(recipientEmail, subject, messageContent);
-                break;
-            }
-            default:
-                logger.warning("Invalid status change. Please enter 'Approved' or 'Declined'." + "\n");
-                return false;
-        }
-
-        events.getEventsList().add(eventToRemove);
-
-        try (FileWriter fw = new FileWriter("DataForEvents.txt");
-             BufferedWriter bw = new BufferedWriter(fw);
-             PrintWriter out = new PrintWriter(bw)) {
-            for (Event event : events.getEventsList()) {
-                out.println(event.serialize());
-            }
-            logger.info("\u001B[32mEvent information updated successfully.\u001B[0m" + "\n");
-            return true;
-        } catch (IOException e) {
-            logger.severe("Error updating event information: " + e.getMessage() + "\n");
-        }
-        return false;
-    }
-
+   
 
     public static void sendEmail(String recipientEmail, String subject, String messageContent) {
         String senderEmail = "raghadmoh.tha@gmail.com";
