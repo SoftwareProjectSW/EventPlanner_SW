@@ -43,7 +43,7 @@ public class VenueClass {
         this.price = price;
     }
     public static String extractName(String venueInfo) {
-        String regex = ".*Name:\\s*(.*?),.*";
+        String regex = "Name:\\s*([^,]+)";
         return venueInfo.replaceAll(regex, "$1").trim();
     }
 
