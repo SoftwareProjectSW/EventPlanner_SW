@@ -22,7 +22,8 @@ assertTrue(app.aListOfPendingEventsAwaitingApproval());
     @When("selects an event to review")
     public void selectsAnEventToReview() {
 String i= String.valueOf(4);
-        assertTrue(app.selectsAnEventToReview(i));
+assertTrue(app.selectsAnEventToReview(i));
+
     }
     @When("approves the event")
     public void approvesTheEvent() {
