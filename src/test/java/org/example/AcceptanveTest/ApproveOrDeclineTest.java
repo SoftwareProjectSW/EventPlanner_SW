@@ -22,7 +22,9 @@ assertTrue(app.aListOfPendingEventsAwaitingApproval());
     @When("selects an event to review")
     public void selectsAnEventToReview() {
 String i= String.valueOf(4);
-assertTrue(app.selectsAnEventToReview(i));
+        String y= String.valueOf(14);
+        assertTrue(app.selectsAnEventToReview(i));
+        assertFalse(app.selectsAnEventToReview(y));
     }
     @When("approves the event")
     public void approvesTheEvent() {
@@ -47,7 +49,7 @@ assertTrue(app.changeEventStatus(id,status,date));
         String id="4";
         String status="DECLINED";
         String date="8/4/2024";
-        assertFalse(app.changeEventStatus(id,status,date));
+        assertTrue(app.changeEventStatus(id,status,date));
     }
     @Then("a notification should be sent to the customer informing them of the event's rejection")
     public void aNotificationShouldBeSentToTheCustomerInformingThemOfTheEventSRejection() {
