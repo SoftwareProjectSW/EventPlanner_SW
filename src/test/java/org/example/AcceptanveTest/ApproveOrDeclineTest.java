@@ -4,12 +4,14 @@ import app.ApproveApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.example.Main;
 
 import static org.example.Main.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ApproveOrDeclineTest {
     ApproveApp app=new ApproveApp();
+    Main m=new Main();
     @Given("a list of pending events awaiting approval")
     public void aListOfPendingEventsAwaitingApproval() {
 assertTrue(app.aListOfPendingEventsAwaitingApproval());
@@ -28,14 +30,14 @@ assertTrue(app.selectsAnEventToReview(i));
 String id="4";
 String status="Approved";
 String date="1/4/2024";
-assertTrue(changeEventStatus(id,status,date));
+assertTrue(m.changeEventStatus(id,status,date));
     }
     @Then("the event status should be updated to {string} in the events file")
     public void theEventStatusShouldBeUpdatedToInTheEventsFile(String string) {
         String id="4";
         String status="Approved";
         String date="1/4/2024";
-        assertTrue(changeEventStatus(id,status,date));
+        assertTrue(m.changeEventStatus(id,status,date));
     }
     @Then("a notification should be sent to the customer and provider confirming event approval")
     public void aNotificationShouldBeSentToTheCustomerAndProviderConfirmingEventApproval() {
@@ -46,7 +48,7 @@ assertTrue(changeEventStatus(id,status,date));
         String id="4";
         String status="Declined";
         String date="7/4/2024";
-        assertFalse(changeEventStatus(id,status,date));
+        assertFalse(m.changeEventStatus(id,status,date));
     }
     @Then("a notification should be sent to the customer informing them of the event's rejection")
     public void aNotificationShouldBeSentToTheCustomerInformingThemOfTheEventSRejection() {
