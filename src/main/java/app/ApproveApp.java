@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import static app.EnteredBudget.serviceProviderData;
 import static DataB.SuperSPData.readSPData;
@@ -165,7 +166,7 @@ public class ApproveApp {
             logger.info("Email sent successfully to " + recipientEmail + "\n");
         } catch (MessagingException e) {
             logger.severe("Error occurred while sending email: " + e.getMessage() + "\n");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "there is error ", e);
         }
     }
 
