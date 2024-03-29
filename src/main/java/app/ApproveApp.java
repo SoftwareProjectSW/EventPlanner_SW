@@ -180,26 +180,25 @@ public class ApproveApp {
         }
 
         // Modify the status of the removed event
-        switch (statusChange.toUpperCase()) {
-            case "APPROVED":{
+     if (statusChange.toUpperCase().equals("APPROVED")) {
+         
                 eventToRemove.setStatus(Event.Status.APPROVED);
                 matchIdWithDates(eventId,date);
                 String recipientEmail = "s12113094@stu.najah.edu";
                 String subject = "You have a new event!";
                 String messageContent = "You have a new event for the provider with ID: " + eventId;
                 sendEmail(recipientEmail, subject, messageContent);
-break;            }
-            case "DECLINED":{
+           }
+      else if(statusChange.toUpperCase().equals("DECLINED")){
                 eventToRemove.setStatus(Event.Status.DECLINED);
                 matchIdWithDates(eventId,date);
                 String recipientEmail = "s12113094@stu.najah.edu";
                 String subject = "Event Declined";
                 String messageContent = "Your event with the provider with ID: " + eventId + " has been declined.";
                 sendEmail(recipientEmail, subject, messageContent);
-
-break;
+                
             }
-            default:
+           else{
                 logger.warning("Invalid status change. Please enter 'Approved' or 'Declined'." + "\n");
                 return false;
         }
