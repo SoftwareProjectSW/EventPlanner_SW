@@ -62,15 +62,6 @@ public class ApproveApp {
 
 
 
-
-
-
-    public static void main(String[] args) {//print events in file
-        String id = "5";
-        String date = "8/4/2024";
-        matchIdWithDates(id, date);
-    }
-
     public static void matchIdWithDates(String id, String date) {
         readSPData("sp_price_dates.txt");
         SuperSPData object = new SuperSPData();
