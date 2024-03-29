@@ -49,11 +49,7 @@ public class ApproveApp {
         return false;
     }
 
-    public static void main(String[] args) {//print events in file
-        String id = "4";
-        String date = "8/4/2024";
-        matchIdWithDates(id, date);
-    }
+  
 
     public static void matchIdWithDates(String id, String date) {
         readSPData("sp_price_dates.txt");
