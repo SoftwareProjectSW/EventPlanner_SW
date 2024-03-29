@@ -5,6 +5,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 public class OrganizerData {
     private static ArrayList<Organizer> organizersList =new ArrayList<>();
     private  String orgFile="DataForOrganizer.txt";
