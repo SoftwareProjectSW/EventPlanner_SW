@@ -45,7 +45,7 @@ assertTrue(app.changeEventStatus(id,status,date));
     @When("declines the event")
     public void declinesTheEvent() {
         String id="4";
-        String status="Declined";
+        String status="DECLINED";
         String date="8/4/2024";
         assertFalse(app.changeEventStatus(id,status,date));
     }
