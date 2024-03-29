@@ -192,6 +192,7 @@ public class ApproveApp {
 break;            }
             case "DECLINED":{
                 eventToRemove.setStatus(Event.Status.DECLINED);
+                matchIdWithDates(eventId,date);
                 String recipientEmail = "s12113094@stu.najah.edu";
                 String subject = "Event Declined";
                 String messageContent = "Your event with the provider with ID: " + eventId + " has been declined.";
