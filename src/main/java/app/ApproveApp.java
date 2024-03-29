@@ -49,7 +49,7 @@ public class ApproveApp {
         return false;
     }
 
-  
+
 
     public static void matchIdWithDates(String id, String date) {
         readSPData("sp_price_dates.txt");
@@ -181,14 +181,7 @@ public class ApproveApp {
 
         // Modify the status of the removed event
         switch (statusChange.toUpperCase()) {
-            case "APPROVED":{
-                eventToRemove.setStatus(Event.Status.APPROVED);
-                matchIdWithDates(eventId,date);
-                String recipientEmail = "s12113094@stu.najah.edu";
-                String subject = "You have a new event!";
-                String messageContent = "You have a new event for the provider with ID: " + eventId;
-                sendEmail(recipientEmail, subject, messageContent);
-break;            }
+        
             case "DECLINED":{
                 eventToRemove.setStatus(Event.Status.DECLINED);
                 matchIdWithDates(eventId,date);
@@ -199,6 +192,14 @@ break;            }
 
 break;
             }
+            case "APPROVED":{
+                eventToRemove.setStatus(Event.Status.APPROVED);
+                matchIdWithDates(eventId,date);
+                String recipientEmail = "s12113094@stu.najah.edu";
+                String subject = "You have a new event!";
+                String messageContent = "You have a new event for the provider with ID: " + eventId;
+                sendEmail(recipientEmail, subject, messageContent);
+                break;            }
             default:
                 logger.warning("Invalid status change. Please enter 'Approved' or 'Declined'." + "\n");
                 return false;
