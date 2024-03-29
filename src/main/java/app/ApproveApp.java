@@ -4,6 +4,7 @@ import DataB.EventData;
 import DataB.SuperSPData;
 import org.example.EmailConfig;
 import org.example.Event;
+import org.example.Main;
 import org.example.ServiceProviderClass;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -36,7 +37,7 @@ public class ApproveApp {
 
 
 
- 
+
 
 
 
@@ -46,7 +47,7 @@ public class ApproveApp {
         List<List<String>> freeDates = object.getAllFreeDates();
         List<ServiceProviderClass> serviceProviderList = serviceProviderData.getServiceProviderList();
 
-        boolean found = findServiceProviderAndPrintDetails(id, date, freeDates, serviceProviderList, object);
+        boolean found = Main.findServiceProviderAndPrintDetails(id, date, freeDates, serviceProviderList, object);
 
         if (!found) {
             logger.info("No match found for ID " + id + "\n");
@@ -55,22 +56,9 @@ public class ApproveApp {
         updateFreeDates(freeDates, object.getAllBookedDates(), object.getAllBudgets());
     }
 
-    private static boolean findServiceProviderAndPrintDetails(String id, String date, List<List<String>> freeDates, List<ServiceProviderClass> serviceProviderList, SuperSPData object) {
-        try {
-            for (int i = 0; i < serviceProviderList.size(); i++) {
-                ServiceProviderClass serviceProvider = serviceProviderList.get(i);
-                if (serviceProvider.getId().equals(id)) {
-                    printServiceProviderDetails(serviceProvider);
-                    return processFreeDates(id, date, freeDates, i, object);
-                }
-            }
-        } catch (Exception e) {
-            logger.severe("Error occurred: " + e.getMessage() + "\n");
-        }
-        return false;
-    }
 
-    private static void printServiceProviderDetails(ServiceProviderClass serviceProvider) {
+
+    public static void printServiceProviderDetails(ServiceProviderClass serviceProvider) {
         logger.info("\u001B[34mName: " + serviceProvider.getName() + "\u001B[0m" + "\n"); // Blue color for name
         logger.info("ID: " + serviceProvider.getId() + "\n");
         logger.info("Email: " + serviceProvider.getEmail() + "\n");
@@ -81,7 +69,7 @@ public class ApproveApp {
         logger.info("\nFree Dates: " + "\n");
     }
 
-    private static boolean processFreeDates(String id, String date, List<List<String>> freeDates, int serviceProviderIndex, SuperSPData object) {
+    public static boolean processFreeDates(String id, String date, List<List<String>> freeDates, int serviceProviderIndex, SuperSPData object) {
         if (serviceProviderIndex < freeDates.size()) {
             List<String> dates = freeDates.get(serviceProviderIndex);
             return findAndProcessDate(id, date, dates, serviceProviderIndex, object);
@@ -177,6 +165,7 @@ public class ApproveApp {
             logger.info("Email sent successfully to " + recipientEmail + "\n");
         } catch (MessagingException e) {
             logger.severe("Error occurred while sending email: " + e.getMessage() + "\n");
+            e.printStackTrace();
         }
     }
 

@@ -3,7 +3,9 @@ package org.example;
 import app.*;
 import DataB.*;
 import io.cucumber.java.bs.A;
-
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -21,6 +23,7 @@ import static org.example.SuperSPClass.serviceProviderData;
 
 
 public class Main {
+
   static   boolean displayMainMenu = true;
   static   boolean displayUserMenu = true;
 
@@ -47,7 +50,6 @@ public class Main {
     private static final Logger logger = LoggerUtility.getLogger();
     private static Scanner in = new Scanner(System.in);
     SuperSPData booking_obj=new SuperSPData();
-
     public static void menu(){
         displayupline();
         logger.info("|       Welcome to Event Planner Services System :)     \n");
@@ -67,7 +69,6 @@ public class Main {
         logger.info("Ent with ID " + i + " not found." + "\n");
         return false;
     }
-
     public static boolean aListOfApprovedEvents() {
         EventData events = new EventData();
         int pendingEventsCount = 0;
@@ -79,6 +80,20 @@ public class Main {
         }
         logger.info("Total number of Upcoming events: " + pendingEventsCount + "\n");
         return true;
+    }
+    public static boolean findServiceProviderAndPrintDetails(String id, String date, List<List<String>> freeDates, List<ServiceProviderClass> serviceProviderList, SuperSPData object) {
+        try {
+            for (int i = 0; i < serviceProviderList.size(); i++) {
+                ServiceProviderClass serviceProvider = serviceProviderList.get(i);
+                if (serviceProvider.getId().equals(id)) {
+                    ApproveApp.printServiceProviderDetails(serviceProvider);
+                    return ApproveApp.processFreeDates(id, date, freeDates, i, object);
+                }
+            }
+        } catch (Exception e) {
+            logger.severe("Error occurred: " + e.getMessage() + "\n");
+        }
+        return false;
     }
     public static boolean changeEventStatus(String eventId, String statusChange, String date) {
         ApproveApp app=new ApproveApp();
