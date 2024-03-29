@@ -36,14 +36,14 @@ public class ApproveApp {
     }
     public static boolean aListOfApprovedEvents() {
         EventData events = new EventData();
-        int pendingEventsCount = 0;
+        int approved = 0;
         for (Event event : events.getEventsList()) {
             if (event.getStatus() == Event.Status.APPROVED) {
-                logger.info(event.toString() + "\n");
-                pendingEventsCount++;
+                logger.info(event + "\n");
+                approved++;
             }
         }
-        logger.info("Total number of Upcoming events: " + pendingEventsCount + "\n");
+        logger.info("Total number of Upcoming events: " + approved + "\n");
         return true;
     }
 
@@ -62,6 +62,15 @@ public class ApproveApp {
 
 
 
+
+
+
+
+    public static void main(String[] args) {//print events in file
+        String id = "5";
+        String date = "8/4/2024";
+        matchIdWithDates(id, date);
+    }
 
     public static void matchIdWithDates(String id, String date) {
         readSPData("sp_price_dates.txt");
