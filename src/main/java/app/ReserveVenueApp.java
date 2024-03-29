@@ -122,7 +122,7 @@ public class ReserveVenueApp {
             writer.write(venueDetails);
             writer.newLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "there is error ", e);
         }
 
         return true;

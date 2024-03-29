@@ -71,7 +71,7 @@ public class SuperSPData {
             processServiceData(allBudgets, allFreeDates, allBookedDates, budgetLine, freeDateLine, bookedDateLine);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "there is error ", e);
         }
 
         // Print out the data for demonstration

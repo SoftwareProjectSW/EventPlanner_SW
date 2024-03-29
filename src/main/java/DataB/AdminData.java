@@ -35,7 +35,8 @@ public class AdminData {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "there is error ", e);
+
         }
     }
 

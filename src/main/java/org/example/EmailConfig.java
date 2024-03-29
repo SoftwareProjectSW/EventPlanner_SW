@@ -15,8 +15,7 @@ public class EmailConfig {
             properties.load(fis);
             fis.close();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error loading config.properties file: " + e.getMessage());
+            logger.log(Level.SEVERE, "there is error ", e);
         }
     }
 
