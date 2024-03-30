@@ -3,18 +3,11 @@ package org.example;
 import app.*;
 import DataB.*;
 import io.cucumber.java.bs.A;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.*;
+import java.util.*;
+
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
 import java.util.logging.Logger;
 
 import static DataB.SuperSPData.readSPData;
@@ -416,10 +409,53 @@ changeEventStatus(id,status,dat);
             AddSP_App A = new AddSP_App(Line);
             if (A.getIsSPLineValide()) {
                 flag=false;
-                A.addLineToFile(Line);
+                addLineToFile(Line);
             } else System.out.println("Invalid input!!!");
         }while(flag);
 
+    }
+    public static void addLineToFile(String line) {
+        AddSP_App a=new AddSP_App();
+        ServiceProviderData sp = new ServiceProviderData();
+        String filename = "DataForSP.txt";
+        if (a.isValidLine(line)) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+                String fileLines;
+                Set<String> ids = new HashSet<>();
+
+                while ((fileLines = reader.readLine()) != null) {
+
+                    String[] fields = fileLines.split(",");
+                    if (fields.length >= 2) {
+                        ids.add(fields[1]);
+                    }
+                }
+
+                String[] newFields = line.split(",");
+                if (!ids.contains(newFields[1])) {
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+                        writer.write(line);
+                        writer.newLine();
+
+                        a.setAlredyExists(false);
+                        a.setSP_Added(true);
+                        System.out.println("Line added successfully!");
+
+                    } catch (IOException e) {
+                        System.err.println("Error writing to file: " + e.getMessage());
+                    }
+                } else {
+                   a.setSP_Added(false);
+                    a.setAlredyExists(true);
+                    System.err.println("Error: Unique ID already exists!");
+                }
+            } catch (IOException e) {
+                System.err.println("Error reading file: " + e.getMessage());
+            }
+        } else {
+            System.err.println("Error: Invalid line format!");
+            a.showMessageToEnterFullDetails();
+        }
     }
     public static void deleteSp(){
         while (true) {
