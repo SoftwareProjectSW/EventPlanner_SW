@@ -18,6 +18,7 @@ public class DataTest {
     Object obj;
     AdminData AdminData = new AdminData();
     EventData EventData = new EventData();
+    VenueData VenueData=new VenueData();
     OrganizerData  OrganizerData = new OrganizerData();
     @Given("the method readAdminDataFromFile used incorrectly")
     public void the_method_read_admin_data_from_file_used_incorrectly() {

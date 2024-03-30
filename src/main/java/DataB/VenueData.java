@@ -14,8 +14,8 @@ public class VenueData {
     Double maxPrice;
     Integer maxSize;
 
-    private static ArrayList <VenueClass> venueArrayList = new ArrayList<>();
-    private static String VenueFile="DataVenueFile.txt";
+    private  ArrayList <VenueClass> venueArrayList = new ArrayList<>();
+    private  String VenueFile="DataVenueFile.txt";
 
 
     public VenueData() {
@@ -63,7 +63,7 @@ public class VenueData {
 
 
 
-    public static boolean readVenueDataFromFile(ArrayList array) {
+    public  boolean readVenueDataFromFile(ArrayList array) {
 
 
         try(BufferedReader reader = new BufferedReader(new FileReader(VenueFile))) {
