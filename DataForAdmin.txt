@@ -1,2 +1,2 @@
-hala@gmail.com,123
-raghad@gmail.com,456
+hala@gmail.com,123,nablus
+raghad@gmail.com,456,tulkarm

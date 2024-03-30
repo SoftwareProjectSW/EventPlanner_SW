@@ -4,6 +4,7 @@ import DataB.AdminData;
 import org.example.AdminClass;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class LogInAsAdmin {
     private boolean loginFlag=false;
@@ -31,7 +32,8 @@ public class LogInAsAdmin {
     public void loggInCheck(String email, String password) {
         AdminData a=new AdminData();
         String file="DataForAdmin.txt";
-        a.readAdminDataFromFile(file);
+        ArrayList array=new ArrayList();
+        a.readAdminDataFromFile(array);
       for (AdminClass admin : a.getAdminList()) {
            if (email.equals(admin.getEmail()) && password.equals(admin.getPassword())) {
             login();
