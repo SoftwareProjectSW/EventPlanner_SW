@@ -8,13 +8,18 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import java.util.logging.Logger;
 import java.util.logging.Level;
+
+
+
 
 public class EventData {
     private static final Logger logger = LoggerUtility.getLogger();
 
+    public void setEventsList(ArrayList<Event> eventsList) {
+        this.eventsList = eventsList;
+    }
 
     private  ArrayList<Event> eventsList = new ArrayList<>();
 
@@ -30,15 +35,22 @@ public class EventData {
         return eventsList;
     }
 
+    public static void main(String[] args) {//print events in file
 
-    public static ArrayList<Event> readEventsFromFile( ArrayList arrayList) {
+        EventData events = new EventData();
+        for (Event event : events.getEventsList()) {
+            System.out.println(event);
+        }
+
+        //   System.out.println(events.eventsList.size());
+    }
+
+    public static ArrayList<Event> readEventsFromFile(ArrayList arrayList) {
         ArrayList<Event> events = new ArrayList<>();
         String filename = "DataForEvents.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-
             int size = arrayList.size();
-
             String line;
             StringBuilder eventString = new StringBuilder();
 
@@ -47,8 +59,9 @@ public class EventData {
                 if (line.equals("***")) {
                     if (eventString.length() > 0) {
                         Event event = createEventFromString(eventString.toString());
-                            events.add(event);
-                        
+
+                        events.add(event);
+
                     }
                     eventString = new StringBuilder();
                 } else {
@@ -56,15 +69,11 @@ public class EventData {
                 }
             }
 
-            // Process the last event if any
-            if (eventString.length() > 0) {
-                Event event = createEventFromString(eventString.toString());
-                    events.add(event);
-                
-            }
+
         } catch (Exception e) {
             logger.log(Level.SEVERE, "there is error ", e);
             return null;
+
         }
 
         return events;
