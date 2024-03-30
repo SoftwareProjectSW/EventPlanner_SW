@@ -47,9 +47,8 @@ public class EventData {
                 if (line.equals("***")) {
                     if (eventString.length() > 0) {
                         Event event = createEventFromString(eventString.toString());
-                        if (event != null) {
                             events.add(event);
-                        }
+                        
                     }
                     eventString = new StringBuilder();
                 } else {
@@ -60,13 +59,12 @@ public class EventData {
             // Process the last event if any
             if (eventString.length() > 0) {
                 Event event = createEventFromString(eventString.toString());
-                if (event != null) {
                     events.add(event);
-                }
+                
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "there is error ", e);
-return null;
+            return null;
         }
 
         return events;
