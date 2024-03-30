@@ -130,6 +130,8 @@ public class ApproveApp {
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipientEmail));
             message.setSubject(subject);
             message.setText(messageContent);
+            Transport.send(message);
+            logger.info("Email sent successfully to " + recipientEmail + "\n");
          } catch (MessagingException e) {
             logger.severe("Error occurred while sending email: " + e.getMessage() + "\n");
             logger.log(Level.SEVERE, "there is error ", e);}}
