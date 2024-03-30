@@ -58,13 +58,12 @@ public class VenueData {
         return minPrice;
     }
 
-  
+
 
     public void readVenueDataFromFile() {
 
 
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(VenueFile));
+        try(BufferedReader reader = new BufferedReader(new FileReader(VenueFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -78,9 +77,10 @@ public class VenueData {
                 }
             }
             reader.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
+        
 
     }
 
