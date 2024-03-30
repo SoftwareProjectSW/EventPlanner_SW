@@ -15,3 +15,9 @@ Feature: Organizer Manages Event
     And declines the event
     Then the event status should be updated to "Declined" in the events file
     And a notification should be sent to the customer informing them of the event's rejection
+
+  Scenario: Error occurs during update of free dates
+    Given a list of free dates "2024-04-01" and booked dates "2024-04-02, 2024-04-03"
+    And a list of all budgets "1000"
+    When an error occurs while updating the free dates
+    Then an error message should be logged

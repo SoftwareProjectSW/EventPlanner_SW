@@ -67,9 +67,7 @@ public class ApproveOrDeclineTest {
 
     }
 
-
-  
-
+    
     @Test
     public void testfindAndProcessDate() throws Exception {
 
@@ -84,6 +82,41 @@ public class ApproveOrDeclineTest {
         boolean f = ApproveApp.findAndProcessDate( id,  date, dates,  serviceProviderIndex,  object);
 
         assertFalse(f);
+
+    }
+
+    @Given("a list of free dates {string} and booked dates {string}")
+    public void aListOfFreeDatesAndBookedDates(String string, String string2) {
+
+    }
+    @Given("a list of all budgets {string}")
+    public void aListOfAllBudgets(String string) {
+
+    }
+    @When("an error occurs while updating the free dates")
+    public void anErrorOccursWhileUpdatingTheFreeDates() {
+
+    }
+    @Then("an error message should be logged")
+    public void anErrorMessageShouldBeLogged() {
+ ; List<List<String>> freeDates = null; // Mock data
+        List<List<String>> bookedDates = null; // Mock data
+        List<String> allBudgets = null; // Mock data
+
+        // Perform the test
+        try {
+            app.updateFreeDates(freeDates, bookedDates, allBudgets);
+            // If the control reaches here, the test should fail
+            System.out.println("Test failed: No exception was thrown when expected.");
+        } catch (Exception e) {
+
+            String expectedErrorMessage = "Error updating free dates:";
+            String loggedMessage = e.getMessage(); // Get the logged error message
+            if (!loggedMessage.startsWith(expectedErrorMessage)) {
+                System.out.println("Test failed: Incorrect error message logged.");
+            }
+        }
+        assertFalse(app.updateFreeDates(freeDates, bookedDates, allBudgets));
 
     }
 

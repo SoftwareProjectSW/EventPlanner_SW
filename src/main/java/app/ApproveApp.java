@@ -37,13 +37,13 @@ public class ApproveApp {
         SuperSPData object = new SuperSPData();
         List<List<String>> freeDates = object.getAllFreeDates();
         List<ServiceProviderClass> serviceProviderList = serviceProviderData.getServiceProviderList();
-      boolean found = Main.findServiceProviderAndPrintDetails(id, date, freeDates, serviceProviderList, object);
-   if (!found) {
-       logger.info("No match found for ID " + id + "\n");
+        boolean found = Main.findServiceProviderAndPrintDetails(id, date, freeDates, serviceProviderList, object);
+        if (!found) {
+            logger.info("No match found for ID " + id + "\n");
         }
-   updateFreeDates(freeDates, object.getAllBookedDates(), object.getAllBudgets());
+        updateFreeDates(freeDates, object.getAllBookedDates(), object.getAllBudgets());
     }
-  public static void printServiceProviderDetails(ServiceProviderClass serviceProvider) {
+    public static void printServiceProviderDetails(ServiceProviderClass serviceProvider) {
         logger.info("\u001B[34mName: " + serviceProvider.getName() + "\u001B[0m" + "\n"); // Blue color for name
         logger.info("ID: " + serviceProvider.getId() + "\n");
         logger.info("Email: " + serviceProvider.getEmail() + "\n");
@@ -61,7 +61,7 @@ public class ApproveApp {
         }
         return false;
     }
- public static boolean findAndProcessDate(String id, String date, List<String> dates, int serviceProviderIndex, SuperSPData object) {
+    public static boolean findAndProcessDate(String id, String date, List<String> dates, int serviceProviderIndex, SuperSPData object) {
         boolean dateFound = false;
         for (int j = 0; j < dates.size(); j++) {
             String d = dates.get(j);
@@ -75,40 +75,42 @@ public class ApproveApp {
         }
         return dateFound;
     }
-   private static void processMatchedDate(String id, String date, List<String> dates, int dateIndex, int serviceProviderIndex, SuperSPData object) {
+    private static void processMatchedDate(String id, String date, List<String> dates, int dateIndex, int serviceProviderIndex, SuperSPData object) {
         logger.info("Match found for date " + dates.get(dateIndex) + " at index " + dateIndex + "\n");
         object.getAllBookedDates().get(serviceProviderIndex).add(date);
-  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
         LocalDate deletedDate = LocalDate.parse(date, formatter);
         LocalDate addedDate = deletedDate.plusDays(7);
         String addedDateStr = addedDate.format(formatter);
         dates.add(addedDateStr);
-  dates.remove(dateIndex);
+        dates.remove(dateIndex);
     }
-   public static void updateFreeDates(List<List<String>> freeDates, List<List<String>> bookedDates, List<String> allBudgets) {
+    public static boolean updateFreeDates(List<List<String>> freeDates, List<List<String>> bookedDates, List<String> allBudgets) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("sp_price_dates.txt"))) {
             for (int i = 0; i < freeDates.size(); i++) {
                 writer.write(allBudgets.get(i) + "\n");
-   List<String> dates = freeDates.get(i);
+                List<String> dates = freeDates.get(i);
                 for (String date : dates) {
                     writer.write(date + " ");
                 }
                 writer.newLine();
-   List<String> booked = bookedDates.get(i);
+                List<String> booked = bookedDates.get(i);
                 if (!booked.isEmpty()) {
                     for (String bookedDate : booked) {
                         writer.write(bookedDate + " ");
                     }
                     writer.newLine();
                 }
- writer.write("*" + "\n");
+                writer.write("*" + "\n");
             }
-  logger.info("Free dates updated successfully." + "\n");
+            logger.info("Free dates updated successfully." + "\n");
         } catch (Exception e) {
             logger.severe("Error updating free dates: " + e.getMessage()+'\n');
+            return false;
         }
+        return true;
     }
-   public static void sendEmail(String recipientEmail, String subject, String messageContent) {
+    public static void sendEmail(String recipientEmail, String subject, String messageContent) {
         String senderEmail = EmailConfig.getSenderEmail();
         String password = EmailConfig.getPassword();
         Properties properties = new Properties();
@@ -122,14 +124,14 @@ public class ApproveApp {
                 return new PasswordAuthentication(senderEmail, password);
             }
         });
-  try {
+        try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(senderEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipientEmail));
             message.setSubject(subject);
             message.setText(messageContent);
             Transport.send(message);
-   logger.info("Email sent successfully to " + recipientEmail + "\n");
+            logger.info("Email sent successfully to " + recipientEmail + "\n");
         } catch (MessagingException e) {
             logger.severe("Error occurred while sending email: " + e.getMessage() + "\n");
             logger.log(Level.SEVERE, "there is error ", e);}}
