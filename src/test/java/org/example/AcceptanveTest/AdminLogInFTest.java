@@ -35,6 +35,9 @@ this.password=pass;
         String email="";
         String pass="";
 LogApp.errorInLogin(email,pass);
+email="raghad";
+pass="111";
+LogApp.errorInLogin(email,pass);
     }
 
     @Then("successful login")
