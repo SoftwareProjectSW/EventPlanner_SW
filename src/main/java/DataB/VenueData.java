@@ -14,11 +14,14 @@ public class VenueData {
     Double maxPrice;
     Integer maxSize;
 
-    private ArrayList <VenueClass> venueArrayList = new ArrayList<>();
-    private  String VenueFile="DataVenueFile.txt";
+    private static ArrayList <VenueClass> venueArrayList = new ArrayList<>();
+    private static String VenueFile="DataVenueFile.txt";
+
 
     public VenueData() {
-        this.readVenueDataFromFile();
+        ArrayList array = new ArrayList();
+
+        boolean a=  this.readVenueDataFromFile(array);
 // Check if the list is not empty
         if (!venueArrayList.isEmpty()) {
 
@@ -60,10 +63,11 @@ public class VenueData {
 
 
 
-    public void readVenueDataFromFile() {
+    public static boolean readVenueDataFromFile(ArrayList array) {
 
 
         try(BufferedReader reader = new BufferedReader(new FileReader(VenueFile))) {
+            int size1=array.size();
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -76,11 +80,12 @@ public class VenueData {
 
                 }
             }
-            reader.close();
+                return true;
         } catch (Exception e) {
             System.err.println("Error reading file: " + e.getMessage());
+            return false;
         }
-        
+
 
     }
 

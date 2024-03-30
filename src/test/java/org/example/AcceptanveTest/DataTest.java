@@ -3,6 +3,7 @@ package org.example.AcceptanveTest;
 import DataB.AdminData;
 import DataB.EventData;
 import DataB.OrganizerData;
+import DataB.VenueData;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -59,5 +60,17 @@ public class DataTest {
 
         assertFalse(y);
     }
+    @Given("the method readVenueDataFromFile used incorrectly")
+    public void theMethodReadVenueDataFromFileUsedIncorrectly() {
+        ArrayList i = null;
+        y = VenueData.readVenueDataFromFile(i);
+
+    }
+    @Then("an exception trace occurs on readVenueDataFromFile and return false")
+    public void anExceptionTraceOccursOnReadVenueDataFromFileAndReturnFalse() {
+assertFalse(y);
+    }
+
+
 
 }
