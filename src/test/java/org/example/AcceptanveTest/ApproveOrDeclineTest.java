@@ -67,7 +67,7 @@ public class ApproveOrDeclineTest {
 
     }
 
-    
+
     @Test
     public void testfindAndProcessDate() throws Exception {
 
@@ -119,5 +119,39 @@ public class ApproveOrDeclineTest {
         assertFalse(app.updateFreeDates(freeDates, bookedDates, allBudgets));
 
     }
+    @Given("a ServiceProviderIndex of {int}")
+    public void aServiceProviderIndexOf(Integer int1) {
+
+    }
+    @Given("a date {string}")
+    public void aDate(String string) {
+
+    }
+    @Given("a list of free dates with size {int}")
+    public void aListOfFreeDatesWithSize(Integer int1) {
+
+    }
+    @Given("a SuperSPData object")
+    public void aSuperSPDataObject() {
+
+    }
+    @When("the processFreeDates function is called")
+    public void theProcessFreeDatesFunctionIsCalled() {
+
+    }
+    @Then("it should return false")
+    public void itShouldReturnFalse() {
+        String id = "5";
+        String date = "8/5/2024";
+        List<List<String>> dates = new ArrayList<>();
+        List<List<String>> bookedDates = new ArrayList<>();
+
+        int serviceProviderIndex = 11;
+        SuperSPData object = new SuperSPData();
+        boolean f = ApproveApp.processFreeDates( id,  date, dates, serviceProviderIndex,  object);
+        assertFalse(f);
+    }
+
+
 
 }

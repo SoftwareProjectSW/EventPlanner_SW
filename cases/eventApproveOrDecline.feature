@@ -21,3 +21,11 @@ Feature: Organizer Manages Event
     And a list of all budgets "1000"
     When an error occurs while updating the free dates
     Then an error message should be logged
+
+  Scenario: ServiceProviderIndex exceeds the size of freeDates
+    Given a ServiceProviderIndex of 3
+    And a date "2024-04-01"
+    And a list of free dates with size 2
+    And a SuperSPData object
+    When the processFreeDates function is called
+    Then it should return false
