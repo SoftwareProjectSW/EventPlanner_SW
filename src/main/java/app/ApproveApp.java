@@ -12,6 +12,8 @@ import javax.mail.internet.MimeMessage;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -21,6 +23,8 @@ import static DataB.SuperSPData.readSPData;
 
 public class ApproveApp {
     private static final Logger logger = LoggerUtility.getLogger();
+
+    //private static final Logger logger = Logger.getLogger(ApproveApp.class.getName());
 
 
     public static boolean aListOfPendingEventsAwaitingApproval() {
@@ -78,7 +82,7 @@ public class ApproveApp {
         return false;
     }
 
-    private static boolean findAndProcessDate(String id, String date, List<String> dates, int serviceProviderIndex, SuperSPData object) {
+    public static boolean findAndProcessDate(String id, String date, List<String> dates, int serviceProviderIndex, SuperSPData object) {
         boolean dateFound = false;
         for (int j = 0; j < dates.size(); j++) {
             String d = dates.get(j);
@@ -132,10 +136,11 @@ public class ApproveApp {
             }
 
             logger.info("Free dates updated successfully." + "\n");
-        } catch (IOException e) {
-            logger.severe("Error updating free dates: " + e.getMessage() + "\n");
+        } catch (Exception e) {
+            logger.severe("Error updating free dates: " + e.getMessage()+'\n');
         }
     }
+
 
 
 
@@ -166,9 +171,8 @@ public class ApproveApp {
             logger.info("Email sent successfully to " + recipientEmail + "\n");
         } catch (MessagingException e) {
             logger.severe("Error occurred while sending email: " + e.getMessage() + "\n");
-            logger.log(Level.SEVERE, "there is error ", e);
-        }
-    }
+            logger.log(Level.SEVERE, "there is error ", e);}}
+
 
 
 }
