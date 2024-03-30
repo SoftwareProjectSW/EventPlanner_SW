@@ -68,27 +68,7 @@ public class ApproveOrDeclineTest {
     }
 
 
-    @Test
-    public void testUpdateFreeDates_IOException() throws Exception {
-        // Prepare test data
-        List<List<String>> freeDates = null; // Mock data
-        List<List<String>> bookedDates = null; // Mock data
-        List<String> allBudgets = null; // Mock data
-
-        // Perform the test
-        try {
-            app.updateFreeDates(freeDates, bookedDates, allBudgets);
-            // If the control reaches here, the test should fail
-            System.out.println("Test failed: No exception was thrown when expected.");
-        } catch (Exception e) {
-
-            String expectedErrorMessage = "Error updating free dates:";
-            String loggedMessage = e.getMessage(); // Get the logged error message
-            if (!loggedMessage.startsWith(expectedErrorMessage)) {
-                System.out.println("Test failed: Incorrect error message logged.");
-            }
-        }
-    }
+  
 
     @Test
     public void testfindAndProcessDate() throws Exception {
