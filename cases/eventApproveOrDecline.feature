@@ -29,3 +29,9 @@ Feature: Organizer Manages Event
     And a SuperSPData object
     When the processFreeDates function is called
     Then it should return false
+  Scenario: Send Email Successfully
+    Given a recipient email "recipient@example.com"
+    And a subject "Test Subject"
+    And a message content "This is a test email"
+    When the sendEmail function is called with the given parameters
+    Then it should log "Email sent successfully to recipient@example.com"

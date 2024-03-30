@@ -151,6 +151,30 @@ public class ApproveOrDeclineTest {
         boolean f = ApproveApp.processFreeDates( id,  date, dates, serviceProviderIndex,  object);
         assertFalse(f);
     }
+    @Given("a recipient email {string}")
+    public void aRecipientEmail(String string) {
+
+    }
+    @Given("a subject {string}")
+    public void aSubject(String string) {
+
+    }
+    @Given("a message content {string}")
+    public void aMessageContent(String string) {
+
+    }
+    @When("the sendEmail function is called with the given parameters")
+    public void theSendEmailFunctionIsCalledWithTheGivenParameters() {
+
+    }
+    @Then("it should log {string}")
+    public void itShouldLog(String string) {
+      String email="raghadmoh.tha@gmail.com";
+      String sub="rrrr";
+      String mes="ggg";
+      assertTrue(ApproveApp.sendEmail(email,sub,mes));
+    }
+
 
 
 
