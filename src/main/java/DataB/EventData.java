@@ -66,7 +66,7 @@ public class EventData {
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "there is error ", e);
-
+return null;
         }
 
         return events;

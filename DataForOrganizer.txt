@@ -1,3 +1,3 @@
-tala@gmail.com,000,tulkarm
-hala@gmail.com,123,nablus
-raghad@gmail.com,456,tulkarm
+tala@gmail.com,000
+hala@gmail.com,123
+raghaf@gmail.com,456,tulkarm
