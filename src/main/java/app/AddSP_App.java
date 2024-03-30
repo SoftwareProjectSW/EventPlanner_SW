@@ -18,7 +18,7 @@ public class AddSP_App {
     private boolean isSP_Added ;
     private boolean isAlredyExists;
 
-  
+
 
     public void setAlredyExists(boolean alredyExists) {
         isAlredyExists = alredyExists;
@@ -69,60 +69,13 @@ public class AddSP_App {
 
         return true;
     }
-
-    public  void addLineToFile(String line) {
-        ServiceProviderData sp = new ServiceProviderData();
-
-        String filename = "DataForSP.txt";
-        if (isValidLine(line)) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-                String fileLines;
-                Set<String> ids = new HashSet<>();
-
-                while ((fileLines = reader.readLine()) != null) {
-
-                    String[] fields = fileLines.split(",");
-                    if (fields.length >= 2) {
-                        ids.add(fields[1]); 
-                    }
-                }
-
-                String[] newFields = line.split(",");
-                if (!ids.contains(newFields[1])) {
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
-                        writer.write(line);
-                        writer.newLine();
-
-                        setAlredyExists(false);
-                        setSP_Added(true);
-                        System.out.println("Line added successfully!");
-
-                    } catch (IOException e) {
-                        System.err.println("Error writing to file: " + e.getMessage());
-                    }
-                } else {
-                    setSP_Added(false);
-                    setAlredyExists(true);
-                    System.err.println("Error: Unique ID already exists!");
-                }
-            } catch (IOException e) {
-                System.err.println("Error reading file: " + e.getMessage());
-            }
-        } else {
-            System.err.println("Error: Invalid line format!");
-            showMessageToEnterFullDetails();
-        }
-    }
-
-
-  
-
+    
     public void showMessageToEnterFullDetails(){
         JOptionPane.showMessageDialog(null,"please provide all required information "
                 , "ERROR",JOptionPane.ERROR_MESSAGE);
 
     }
 
-    
+
 
 }
