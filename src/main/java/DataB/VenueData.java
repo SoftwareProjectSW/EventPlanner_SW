@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class VenueData {
 
     Double minPrice;
+    Double maxPrice;
     Integer maxSize;
 
     private ArrayList <VenueClass> venueArrayList = new ArrayList<>();
@@ -22,6 +23,7 @@ public class VenueData {
         if (!venueArrayList.isEmpty()) {
 
             minPrice = venueArrayList.get(0).getPrice();
+            maxPrice = venueArrayList.get(0).getPrice();
             maxSize = venueArrayList.get(0).getSize();
 
             for (VenueClass temp : venueArrayList) {
@@ -31,6 +33,10 @@ public class VenueData {
                 if (price < minPrice) {
                     minPrice = price;
                 }
+                else if (price > maxPrice) {
+                    maxPrice = price;
+                }
+
                 if(size > maxSize){
                     maxSize = size;
                 }
@@ -52,7 +58,7 @@ public class VenueData {
         return minPrice;
     }
 
-
+  
 
     public void readVenueDataFromFile() {
 
