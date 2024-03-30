@@ -19,7 +19,9 @@ public class VenueClass {
     public Double getPrice() {
         return price;
     }
-
+    public String getName() {
+        return name;
+    }
 
 
     public VenueClass( String name,Integer size, Double price) {
