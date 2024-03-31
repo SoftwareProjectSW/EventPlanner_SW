@@ -14,13 +14,13 @@ public class Event {
     public static int serialNumberCounter = 1;
 
 
-    public Event(String email, ArrayList<String> servicesList, String venueSelected, String date, String chosenBudget1) {
-        this.customer = email;
-        this.SP = new ServiceProviderClass(email, servicesList);
-        this.venue = venueSelected;
-        this.date = date;
-        this.price = chosenBudget1;
-    }
+    public Event(String email, ArrayList<String> servicesList, String venueSelected, String date, String chosenBudget1) {this.customer = email;this.SP = new ServiceProviderClass(email, servicesList);this.venue = venueSelected;this.date = date;this.price = chosenBudget1;}
+
+
+
+
+
+    
 
     public Event(String email, String name, String id, String email1, ArrayList<String> servicesList, String venName, String date, String chosenBudget1) {
         this.customer = email;
@@ -55,13 +55,13 @@ public class Event {
     private String price;
 
     public Event(String customer, ServiceProviderClass SP, String venue, String date, String price) {
-        this.customer = customer;
-        this.SP = SP;
-        this.venue = venue;
-        this.date = date;
-        this.price = price;
-        this.status = Status.NOT_SEEN;
-    }
+        this.customer = customer;this.SP = SP;this.venue = venue;this.date = date;this.price = price;this.status = Status.NOT_SEEN;}
+
+
+
+
+
+
 
     public Event(String status, String customer, ServiceProviderClass SP, String venue, String date, String price) {
 
@@ -165,8 +165,8 @@ public class Event {
             // Append the serialized event information to the file
             out.println(event.serialize());
             System.out.println("Event information written to file successfully.");
-        } catch (IOException e) {
-            System.err.println("Error writing event information to file: " + e.getMessage());
+        } catch (IOException e) {System.err.println("Error writing event information to file: " + e.getMessage());
+
         }
     }
 }
