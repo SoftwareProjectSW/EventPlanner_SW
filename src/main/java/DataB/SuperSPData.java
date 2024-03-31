@@ -21,8 +21,7 @@ public class SuperSPData {
         if (values == null || values.isEmpty()) {
             throw new IllegalArgumentException("List is empty or null");
         }
-        int min = parseBudget(values.get(0)); for (String value : values) { int intValue = parseBudget(value);
-            if (intValue < min) {    min = intValue;
+        int min = parseBudget(values.get(0)); for (String value : values) { int intValue = parseBudget(value);   if (intValue < min) {    min = intValue;
             }
         }   return min;
     }
@@ -62,11 +61,10 @@ public class SuperSPData {
             }
             processServiceData(allBudgets, allFreeDates, allBookedDates, budgetLine, freeDateLine, bookedDateLine);
 
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "there is error ", e);
-        }
+        } catch (IOException e) {  logger.log(Level.SEVERE, "there is error ", e);
 
-    }
+        
+    }}
 
     private static void processServiceData(List<String> allBudgets, List<List<String>> allFreeDates, List<List<String>> allBookedDates,
                                            String budgetLine, String freeDateLine, String bookedDateLine) {
