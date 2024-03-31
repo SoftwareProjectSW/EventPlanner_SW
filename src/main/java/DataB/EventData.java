@@ -6,6 +6,7 @@ import org.example.ServiceProviderClass;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -34,13 +35,22 @@ public class EventData {
         return eventsList;
     }
 
+    public static void main(String[] args) {//print events in file
 
+        EventData events = new EventData();
+        for (Event event : events.getEventsList()) {
+            System.out.println(event);
+        }
+
+        //   System.out.println(events.eventsList.size());
+    }
 
     public static ArrayList<Event> readEventsFromFile(ArrayList arrayList) {
         ArrayList<Event> events = new ArrayList<>();
         String filename = "DataForEvents.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            int size = arrayList.size();
             String line;
             StringBuilder eventString = new StringBuilder();
 
