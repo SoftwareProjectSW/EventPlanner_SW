@@ -3,6 +3,7 @@ import app.LoggerUtility;
 import org.example.Organizer;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -12,6 +13,7 @@ public class OrganizerData {
     private  String orgFile="DataForOrganizer.txt";
     public OrganizerData() {
         ArrayList arrayList = new ArrayList<>();
+        boolean flag = this.readOrgDataFromFile(arrayList);
     }
     public static ArrayList<Organizer> getorganizersList() {
         return organizersList;
@@ -19,6 +21,7 @@ public class OrganizerData {
     public  boolean readOrgDataFromFile(ArrayList array)
     {
         try (BufferedReader br = new BufferedReader(new FileReader(orgFile))) {
+            Integer size = array.size();
             String line;
             while ((line = br.readLine()) != null) {
                 // Assuming the data is formatted as "email,password"
@@ -29,7 +32,7 @@ public class OrganizerData {
                     Organizer organizer = new Organizer(email, password);
                     this.organizersList.add(organizer);
                 } else {
-                   logger.info("Invalid data format: " + line);
+                    System.err.println("Invalid data format: " + line);
 
                 }
             }
