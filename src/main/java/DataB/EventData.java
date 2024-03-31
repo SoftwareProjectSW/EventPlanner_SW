@@ -35,15 +35,7 @@ public class EventData {
         return eventsList;
     }
 
-    public static void main(String[] args) {//print events in file
-
-        EventData events = new EventData();
-        for (Event event : events.getEventsList()) {
-            System.out.println(event);
-        }
-
-        //   System.out.println(events.eventsList.size());
-    }
+  
 
     public static ArrayList<Event> readEventsFromFile(ArrayList arrayList) {
         ArrayList<Event> events = new ArrayList<>();
