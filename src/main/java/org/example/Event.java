@@ -15,12 +15,9 @@ public class Event {
 
 
     public Event(String email, ArrayList<String> servicesList, String venueSelected, String date, String chosenBudget1) {
-        this.customer = email;
-        this.SP = new ServiceProviderClass(email, servicesList);
-        this.venue = venueSelected;
-        this.date = date;
-        this.price = chosenBudget1;
-    }
+        this.customer = email;this.SP = new ServiceProviderClass(email, servicesList);        this.venue = venueSelected;        this.date = date;
+        this.price = chosenBudget1;}
+    
 
     public Event(String email, String name, String id, String email1, ArrayList<String> servicesList, String venName, String date, String chosenBudget1) {
         this.customer = email;
@@ -55,11 +52,7 @@ public class Event {
     private String price;
 
     public Event(String customer, ServiceProviderClass SP, String venue, String date, String price) {
-        this.customer = customer;
-        this.SP = SP;
-        this.venue = venue;
-        this.date = date;
-        this.price = price;
+        this.customer = customer;this.SP = SP; this.venue = venue;  this.date = date;  this.price = price;
         this.status = Status.NOT_SEEN;
     }
 
