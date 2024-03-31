@@ -14,13 +14,12 @@ public class Event {
     public static int serialNumberCounter = 1;
 
 
-    public Event(String email, ArrayList<String> servicesList, String venueSelected, String date, String chosenBudget1) {
-        this.customer = email;
-        this.SP = new ServiceProviderClass(email, servicesList);
-        this.venue = venueSelected;
-        this.date = date;
-        this.price = chosenBudget1;
-    }
+    public Event(String email, ArrayList<String> servicesList, String venueSelected, String date, String chosenBudget1) {this.customer = email; this.SP = new ServiceProviderClass(email, servicesList);this.venue = venueSelected; this.date = date;this.price = chosenBudget1;}
+
+
+
+
+
 
     public Event(String email, String name, String id, String email1, ArrayList<String> servicesList, String venName, String date, String chosenBudget1) {
             this.customer = email;
@@ -54,15 +53,14 @@ public class Event {
     private String date;
     private String price;
 
-    public Event(String customer, ServiceProviderClass SP, String venue, String date, String price) {
-      //  this.serialNumber = generateSerialNumber(); // Generate and assign the serial number
-        this.customer = customer;
-        this.SP = SP;
-        this.venue = venue;
-        this.date = date;
-        this.price = price;
-        this.status = Status.NOT_SEEN;
-    }
+    public Event(String customer, ServiceProviderClass SP, String venue, String date, String price) { this.customer = customer;this.SP = SP;this.venue = venue;this.date = date;this.price = price;this.status = Status.NOT_SEEN;}
+
+
+
+
+
+
+
 
     public Event(String status, String customer, ServiceProviderClass SP, String venue, String date, String price) {
 
@@ -118,25 +116,6 @@ public class Event {
 
 
 
-  /*  public String serialize() {
-        // Serialize the event information into a formatted string
-        StringBuilder sb = new StringBuilder();
-        sb.append("Event{\n");
-        sb.append("status: ").append(status).append("\n");
-        sb.append("customer email: ").append(customer).append("\n");
-        sb.append("SP: \n");
-        sb.append("Service Provider's INFO {\n");
-        sb.append("NAME: ").append(SP.getName()).append("\n");
-        sb.append("ID: ").append(SP.getId()).append("\n");
-        sb.append("Email: ").append(SP.getEmail()).append("\n");
-        sb.append("servicesList: ").append(SP.getServicesListPackage()).append("\n");
-        sb.append("}\n");
-        sb.append("venue: ").append(venue).append("\n");
-        sb.append("date: ").append(date).append("\n");
-        sb.append("price: ").append(price).append("$\n");
-        sb.append("}\n***");
-        return sb.toString();
-    }*/
     public String serialize() {
         StringBuilder sb = new StringBuilder();
         sb.append("Event{\n");
@@ -166,8 +145,8 @@ public class Event {
             // Append the serialized event information to the file
             out.println(event.serialize());
             System.out.println("Event information written to file successfully.");
-        } catch (IOException e) {
-            System.err.println("Error writing event information to file: " + e.getMessage());
+        } catch (IOException e) {System.err.println("Error writing event information to file: " + e.getMessage());
+
         }
     }
 }
