@@ -25,7 +25,7 @@ public class ReserveVenueApp {
         ArrayList <VenueClass> array = getVenueWithBudget( budget , size);
         if( i < array.size())
             return array.get(i).getPrice();
-        else return -1;
+        else return -1.0;
 
     }
 
@@ -101,7 +101,7 @@ public class ReserveVenueApp {
 
     public boolean isAddedVenue(String name, int capacity, double price) {
 
-        Integer flag = 0;
+
         VenueData venueData = new VenueData();
         String valid = isValidVenueDetails(name, capacity, price);
 
@@ -127,6 +127,7 @@ public class ReserveVenueApp {
             writer.newLine();
         } catch (IOException e) {
             logger.log(Level.SEVERE, "there is error ", e);
+
         }
 
         return true;

@@ -29,14 +29,15 @@ public class addVenueTest {
 
 
 
+
     }
 
     @When("an organizer fills in the form with invalid MissingName or {int} or {double}")
     public void an_organizer_fills_in_the_form_with_invalid_missing_name_or_or(Integer int1, Double double1) {
 
-        this.venueName = null;
-        this.venueCapacity = 300;
-        this.venuePrice = 100.0 ;
+        String venueName = null;
+        Integer venueCapacity = 300;
+        Double venuePrice = 100.0 ;
         String message = app.isValidVenueDetails(venueName,venueCapacity,venuePrice);
         assertEquals(message, "Please provide a name for the venue");
 
@@ -45,9 +46,9 @@ public class addVenueTest {
     @Then("the system should display an error message {string}")
     public void the_system_should_display_an_error_message(String string) {
 
-        this.venueName = "Venue4";
-        this.venueCapacity = 200;
-        this.venuePrice = -1 ;
+        String venueName = "Venue4";
+        Integer venueCapacity = 200;
+        Double venuePrice = -1.0 ;
         String message = app.isValidVenueDetails(venueName,venueCapacity,venuePrice);
         assertNotEquals(message, "valid");
 
@@ -56,9 +57,9 @@ public class addVenueTest {
     @When("an organizer fills in the form with invalid ValidName or {int} or {double}")
     public void an_organizer_fills_in_the_form_with_invalid_valid_name_or_or(Integer int1, Double double1) {
 
-        this.venueName = "Venue4";
-        this.venueCapacity = -1;
-        this.venuePrice = 100.0 ;
+        String venueName = "Venue4";
+        Integer venueCapacity = -1;
+        Double venuePrice = 100.0 ;
         String message = app.isValidVenueDetails(venueName,venueCapacity,venuePrice);
         assertEquals(message, "Venue capacity must be valid");
 
@@ -69,9 +70,9 @@ public class addVenueTest {
     @When("an organizer fills in the form with invalid {string} or {int} or {double}")
     public void anOrganizerFillsInTheFormWithInvalidNameOrCapacityOrPrice(String name, int capacity, double price) {
 
-        this.venueName = "Venue4";
-        this.venueCapacity = 200;
-        this.venuePrice = -1 ;
+        String venueName = "Venue4";
+        Integer venueCapacity = 200;
+        Double venuePrice = -1.0 ;
         String message = app.isValidVenueDetails(venueName,venueCapacity,venuePrice);
         assertEquals(message, "Venue price must be valid");
     }

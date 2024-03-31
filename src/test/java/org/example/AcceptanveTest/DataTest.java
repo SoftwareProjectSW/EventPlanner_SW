@@ -3,12 +3,15 @@ package org.example.AcceptanveTest;
 import DataB.AdminData;
 import DataB.EventData;
 import DataB.OrganizerData;
-import DataB.VenueData;
+import app.ReserveVenueApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.example.VenueClass;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DataTest {
@@ -18,8 +21,8 @@ public class DataTest {
     Object obj;
     AdminData AdminData = new AdminData();
     EventData EventData = new EventData();
-    VenueData VenueData=new VenueData();
     OrganizerData  OrganizerData = new OrganizerData();
+    ReserveVenueApp ReserveVenueApp = new ReserveVenueApp();
     @Given("the method readAdminDataFromFile used incorrectly")
     public void the_method_read_admin_data_from_file_used_incorrectly() {
 
@@ -61,17 +64,119 @@ public class DataTest {
 
         assertFalse(y);
     }
-    @Given("the method readVenueDataFromFile used incorrectly")
-    public void theMethodReadVenueDataFromFileUsedIncorrectly() {
-        ArrayList i = null;
-        y = VenueData.readVenueDataFromFile(i);
+//////new
+
+    @Given("the method getSelectedVenuePrice used incorrectly")
+    public void the_method_get_selected_venue_price_used_incorrectly() {
+
 
     }
-    @Then("an exception trace occurs on readVenueDataFromFile and return false")
-    public void anExceptionTraceOccursOnReadVenueDataFromFileAndReturnFalse() {
-assertFalse(y);
+    @Then("an exception trace occurs on getSelectedVenuePrice and return false")
+    public void an_exception_trace_occurs_on_get_selected_venue_price_and_return_false() {
+
+        Double flag = Double.valueOf(ReserveVenueApp.getSelectedVenuePrice(800.0,100,1));
+        assertTrue(flag!=-1.0);
+        Double f = Double.valueOf(ReserveVenueApp.getSelectedVenuePrice((double) 800.0,100,12));
+        assertTrue(f == -1.0);
+
     }
 
 
+    @Given("the method getVenueWithBudget used incorrectly")
+    public void the_method_get_venue_with_budget_used_incorrectly() {
+
+
+    }
+    @Then("an exception trace occurs on getVenueWithBudget and return false")
+    public void an_exception_trace_occurs_on_get_venue_with_budget_and_return_false() {
+
+        ArrayList<VenueClass> array = new ArrayList<>();
+        array = ReserveVenueApp.getVenueWithBudget(800.0,100);
+
+        assertTrue(array.size()!=0);
+
+
+    }
+
+
+
+    @Given("the method getSelectedVenue used incorrectly")
+    public void the_method_get_selected_venue_used_incorrectly() {
+
+
+
+    }
+    @Then("an exception trace occurs on getSelectedVenue and return false")
+    public void an_exception_trace_occurs_on_get_selected_venue_and_return_false() {
+
+        String string =ReserveVenueApp.getSelectedVenue(800.0,100,1);
+        assertTrue(!string.isEmpty());
+
+    }
+
+
+    @Given("the method isAddedVenue used incorrectly")
+    public void the_method_is_added_venue_used_incorrectly() {
+
+
+
+    }
+    @Then("an exception trace occurs on isAddedVenue and return false")
+    public void an_exception_trace_occurs_on_is_added_venue_and_return_false() {
+
+        String venueName = null;
+        Integer venueCapacity = 200;
+        Double venuePrice = 1000.0 ;
+        boolean flag = ReserveVenueApp.isAddedVenue( venueName,  venueCapacity,  venuePrice);
+        assertFalse(flag);
+
+        venueName = "Venue1";
+        flag = ReserveVenueApp.isAddedVenue( venueName,  venueCapacity,  venuePrice);
+        assertFalse(flag);
+
+        venueName = "Venue56";
+        flag = ReserveVenueApp.isAddedVenue( venueName,  venueCapacity,  venuePrice);
+        assertTrue(flag);
+
+
+    }
+
+
+
+    @Given("the method isValidVenueDetails used incorrectly")
+    public void the_method_is_valid_venue_details_used_incorrectly() {
+
+
+    }
+    @Then("an exception trace occurs on isValidVenueDetails and return false")
+    public void an_exception_trace_occurs_on_is_valid_venue_details_and_return_false() {
+
+        String venueName = "Venue4";
+        Integer venueCapacity = 200;
+        Double venuePrice = -1.0 ;
+        String message = ReserveVenueApp.isValidVenueDetails(venueName,venueCapacity,venuePrice);
+        assertNotEquals(message, "valid");
+
+        venueName = null;
+        venueCapacity = 300;
+        venuePrice = 100.0 ;
+        message = ReserveVenueApp.isValidVenueDetails(venueName,venueCapacity,venuePrice);
+        assertEquals(message, "Please provide a name for the venue");
+
+        venueName = "Venue4";
+        venueCapacity = -1;
+        venuePrice = 100.0 ;
+        message = ReserveVenueApp.isValidVenueDetails(venueName,venueCapacity,venuePrice);
+        assertEquals(message, "Venue capacity must be valid");
+
+        venueName = "Venue4";
+        venueCapacity = 200;
+        venuePrice = -1.0 ;
+        message = ReserveVenueApp.isValidVenueDetails(venueName,venueCapacity,venuePrice);
+        assertEquals(message, "Venue price must be valid");
+
+
+    }
+    ///new
 
 }
