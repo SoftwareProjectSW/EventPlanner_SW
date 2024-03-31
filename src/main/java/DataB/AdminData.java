@@ -5,9 +5,7 @@ import org.example.AdminClass;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-//import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -27,7 +25,6 @@ public class AdminData {
 
     public  boolean readAdminDataFromFile(ArrayList i) {
         try (BufferedReader br = new BufferedReader(new FileReader(adminFile))) {
-            int r =i.size();
             String line;
             while ((line = br.readLine()) != null) {
                 // Assuming the data is formatted as "email,password"
@@ -38,7 +35,7 @@ public class AdminData {
                     AdminClass admin = new AdminClass(email, password);
                     adminList.add(admin);
                 } else {
-                    System.err.println("Invalid data format: " + line);
+                 logger.info("Invalid data format: " + line);
                 }
             }
             return true;

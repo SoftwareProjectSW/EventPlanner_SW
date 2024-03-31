@@ -15,8 +15,8 @@ import java.util.logging.Level;
 public class ServiceProviderData {
     private static final Logger logger = LoggerUtility.getLogger();
 
-    private  ArrayList<ServiceProviderClass> ServiceProviderList = new ArrayList<>();
-    private  String SPFile="DataForSP.txt";
+    private  ArrayList<ServiceProviderClass>  serviceProviderList = new ArrayList<>();
+    private  String spFile="DataForSP.txt";
 
     public ServiceProviderData() {
         this.readServiceProviderDataFromFile();
@@ -24,15 +24,15 @@ public class ServiceProviderData {
     }
 
     public  String getSPFile() {
-        return SPFile;
+        return spFile;
     }
 
     public ArrayList <ServiceProviderClass> getServiceProviderList() {
-        return ServiceProviderList ;
+        return  serviceProviderList ;
     }
 
     public void readServiceProviderDataFromFile() {
-        try (BufferedReader br = new BufferedReader(new FileReader(SPFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(spFile))) {
             String line;
             while ((line = br.readLine()) != null) {
                 // Assuming the data is formatted as "email,password"
@@ -52,11 +52,11 @@ public class ServiceProviderData {
                         trim++;
 
                     }
-                    ServiceProviderList.add(sProvider);
+                    serviceProviderList.add(sProvider);
 
 
                 } else {
-                    System.err.println("Invalid data format: " + line);
+                   logger.info("Invalid data format: " + line);
                 }
             }
         } catch (IOException e) {
@@ -64,10 +64,10 @@ public class ServiceProviderData {
         }
     }
 
-    public void ViewInfo() {
+    public void viewInfo() {
         ServiceProviderData ob=new ServiceProviderData();
         for(ServiceProviderClass temp : ob.getServiceProviderList()){
-            System.out.println(temp.getName());
+          logger.info(temp.getName());
         }
     }
 }

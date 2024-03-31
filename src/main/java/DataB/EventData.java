@@ -6,7 +6,6 @@ import org.example.ServiceProviderClass;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -42,7 +41,6 @@ public class EventData {
         String filename = "DataForEvents.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            int size = arrayList.size();
             String line;
             StringBuilder eventString = new StringBuilder();
 

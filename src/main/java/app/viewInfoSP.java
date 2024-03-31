@@ -15,7 +15,7 @@ public class viewInfoSP {
     public boolean theAdminCanViewDetailsSuchAsNameContactInformationAndServicesOffered() {
         ServiceProviderData a = new ServiceProviderData();
         String file = "DataForSP.txt";
-        a.ViewInfo();
+        a.viewInfo();
         if (!(a.getServiceProviderList().isEmpty()))
             System.out.println(" service providers are founded");
         return true;
