@@ -1,164 +1,150 @@
-package org.example;
+package DataB;
 
-import DataB.ServiceProviderData;
-import DataB.VenueData;
+import app.LoggerUtility;
+import org.example.Event;
+import org.example.ServiceProviderClass;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
-
-public class Event {
-    public static int serialNumberCounter = 1;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 
-    public Event(String email, ArrayList<String> servicesList, String venueSelected, String date, String chosenBudget1) {
-        this.customer = email;this.SP = new ServiceProviderClass(email, servicesList);    this.venue = venueSelected;    this.date = date;     this.price = chosenBudget1;}
 
-    
 
-    public Event(String email, String name, String id, String email1, ArrayList<String> servicesList, String venName, String date, String chosenBudget1) {
-        this.customer = email;
-        this.SP = new ServiceProviderClass(name, id, email1);
-        this.SP.setServicesListPackage(servicesList);
-        this.venue = venName;
-        this.date = date;
-        this.price = chosenBudget1;
+public class EventData {
+    private static final Logger logger = LoggerUtility.getLogger();
+
+    public void setEventsList(ArrayList<Event> eventsList) {
+        this.eventsList = eventsList;
     }
 
+    private  ArrayList<Event> eventsList = new ArrayList<>();
 
-    public enum Status {
-        NOT_SEEN,
-        APPROVED,
-        DECLINED
+
+    public EventData() {
+
+        ArrayList array = new ArrayList();
+        eventsList = readEventsFromFile(array);
+
     }
 
-    private Status status = Status.NOT_SEEN;
-    private String customer;
-
-    public void setStatus(Status status) {
-        this.status = status;
+    public ArrayList<Event> getEventsList() {
+        return eventsList;
     }
 
-    public static int getSerialNumberCounter() {
-        return serialNumberCounter;
+    public static void main(String[] args) {//print events in file
+
+        EventData events = new EventData();
+        for (Event event : events.getEventsList()) {
+            System.out.println(event);
+        }
+
+        //   System.out.println(events.eventsList.size());
     }
 
-    private ServiceProviderClass SP;
-    private String venue;
-    private String date;
-    private String price;
+    public static ArrayList<Event> readEventsFromFile(ArrayList arrayList) {
+        ArrayList<Event> events = new ArrayList<>();
+        String filename = "DataForEvents.txt";
 
-    public Event(String customer, ServiceProviderClass SP, String venue, String date, String price) {
-        this.customer = customer;this.SP = SP; this.venue = venue;  this.date = date;  this.price = price;   this.status = Status.NOT_SEEN;}
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            int size = arrayList.size();
+            String line;
+            StringBuilder eventString = new StringBuilder();
 
-    public Event(String status, String customer, ServiceProviderClass SP, String venue, String date, String price) {
+            // Read the file line by line
+            while ((line = br.readLine()) != null) {
+                if (line.equals("***")) {
+                    if (eventString.length() > 0) {
+                        Event event = createEventFromString(eventString.toString());
 
-        this.status = Status.valueOf(status);
-        this.customer = customer;
-        this.SP = SP;
-        this.venue = venue;
-        this.date = date;
-        this.price = price;
+                        events.add(event);
+
+                    }
+                    eventString = new StringBuilder();
+                } else {
+                    eventString.append(line).append("\n");
+                }
+            }
+
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "there is error ", e);
+            return null;
+
+        }
+
+        return events;
     }
 
-    public Status getStatus() {
-        return status;
-    }
+    public static Event createEventFromString(String eventString) {
+        String[] lines = eventString.split("\n");
+        String status = null;
+        String customer = null;
+        ServiceProviderClass serviceProvider = null;
+        String venue = null;
+        String date = null;
+        String price = null;
 
-    public ServiceProviderClass getSP() {
-        return SP;
-    }
+        for (String line : lines) {
+            if (line.startsWith("status:")) {
+                status = line.substring(line.indexOf(":") + 1).trim();
+            } else if (line.startsWith("customer email:")) {
+                customer = line.substring(line.indexOf(":") + 1).trim();
+            } else if (line.startsWith("Service Provider's INFO {")) {
+                serviceProvider = createServiceProviderFromString(lines);
+            } else if (line.startsWith("venue:")) {
+                venue = line.substring(line.indexOf(":") + 1).trim();
+            } else if (line.startsWith("date:")) {
+                date = line.substring(line.indexOf(":") + 1).trim();
+            } else if (line.startsWith("price:")) {
+                price = line.substring(line.indexOf(":") + 1).trim();
+            }
+        }
 
-    public String getVenue() {
-        return venue;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public String getCustomer() {
-        return customer;
-    }
-
-    @Override
-    public String toString() {
-        int serialNumber = serialNumberCounter++; // Increment and assign the serial number
-        return  serialNumber + ")" +
-                ColoredOutput.ANSI_BLUE +
-                "Event{" + '\n' +
-                "status: " + status + '\n' +
-                "customer email: " + customer + '\n' +
-                "SP: " + '\n' +
-                SP.toString() + '\n' +
-                "ID: " + SP.getId() + '\n' +
-                ColoredOutput.ANSI_BLUE + '\n' +
-                "venue: " + venue + '\n' +
-                "date: " + date + '\n' +
-                "price: " + price + '\n' +
-                "}" + '\n' + ColoredOutput.ANSI_RESET + "***";
-    }
-
-
-
-    /*  public String serialize() {
-          // Serialize the event information into a formatted string
-          StringBuilder sb = new StringBuilder();
-          sb.append("Event{\n");
-          sb.append("status: ").append(status).append("\n");
-          sb.append("customer email: ").append(customer).append("\n");
-          sb.append("SP: \n");
-          sb.append("Service Provider's INFO {\n");
-          sb.append("NAME: ").append(SP.getName()).append("\n");
-          sb.append("ID: ").append(SP.getId()).append("\n");
-          sb.append("Email: ").append(SP.getEmail()).append("\n");
-          sb.append("servicesList: ").append(SP.getServicesListPackage()).append("\n");
-          sb.append("}\n");
-          sb.append("venue: ").append(venue).append("\n");
-          sb.append("date: ").append(date).append("\n");
-          sb.append("price: ").append(price).append("$\n");
-          sb.append("}\n***");
-          return sb.toString();
-      }*/
-    public String serialize() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Event{\n");
-        sb.append("status: ").append(status).append('\n');
-        sb.append("customer email: ").append(customer).append('\n');
-        sb.append("SP: \n");
-        sb.append("Service Provider's INFO {\n");
-        sb.append("NAME: ").append(SP.getName()).append('\n');
-        sb.append("ID: ").append(SP.getId()).append('\n');
-        sb.append("Email: ").append(SP.getEmail()).append('\n');
-        sb.append("servicesList: ").append(SP.getServicesListPackage()).append('\n');
-        sb.append("}\n");
-        sb.append("venue: ").append(venue).append('\n');
-        sb.append("date: ").append(date).append('\n');
-        sb.append("price: ").append(price).append('\n');
-        sb.append("}\n***\n");
-        return sb.toString();
-    }
-
-
-
-
-    public static void writeEventToFile(Event event) {
-        try (FileWriter fw = new FileWriter("DataForEvents.txt", true);
-             BufferedWriter bw = new BufferedWriter(fw);
-             PrintWriter out = new PrintWriter(bw)) {
-            // Append the serialized event information to the file
-            out.println(event.serialize());
-            System.out.println("Event information written to file successfully.");
-        } catch (IOException e) {
-  System.err.println("Error writing event information to file: " + e.getMessage());
+        if (status != null && customer != null && serviceProvider != null && venue != null && date != null && price != null) {
+            return new Event(status, customer, serviceProvider, venue, date, price);
+        } else {
+            return null; // Return null if event cannot be created
         }
     }
-}
 
+    public static ServiceProviderClass createServiceProviderFromString(String[] lines) {
+        String name = null;
+        String id = null;
+        String email = null;
+        ArrayList<String> servicesList = new ArrayList<>();
+
+        for (String line : lines) {
+            if (line.startsWith("NAME:")) {
+                name = line.substring(line.indexOf(":") + 1).trim();
+            } else if (line.startsWith("ID:")) {
+                id = line.substring(line.indexOf(":") + 1).trim();
+            } else if (line.startsWith("Email:")) {
+                email = line.substring(line.indexOf(":") + 1).trim();
+            } else if (line.startsWith("servicesList:")) {
+                String servicesString = line.substring(line.indexOf(":") + 1).trim();
+                servicesList = parseServicesList(servicesString);
+            }
+        }
+
+        return new ServiceProviderClass(name, id, email, servicesList);
+    }
+
+    public static ArrayList<String> parseServicesList(String servicesString) {
+        ArrayList<String> servicesList = new ArrayList<>();
+        servicesString = servicesString.substring(1, servicesString.length() - 1); // Remove square brackets
+        String[] servicesArray = servicesString.split(", ");
+        for (String service : servicesArray) {
+            servicesList.add(service.trim());
+        }
+        return servicesList;
+    }
+
+
+
+
+
+}
